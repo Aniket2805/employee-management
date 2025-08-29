@@ -1,0 +1,73 @@
+<div
+    class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-100 via-white to-cyan-100 font-[Segoe UI]">
+    <div class="w-full max-w-lg glass-login-card shadow-2xl rounded-3xl p-0 border-0 overflow-hidden animate-fade-in">
+        <div
+            class="login-hero flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-300 py-8 px-8">
+            <h2 class="text-4xl font-extrabold text-white drop-shadow flex items-center gap-3 animate-fade-in">
+                <i class="fa-solid fa-key text-yellow-300 animate-bounce"></i> Welcome Back
+            </h2>
+            <p class="text-lg text-white/90 font-medium mt-2 animate-fade-in">Sign in to your account</p>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-7 px-10 py-10 bg-white/80 backdrop-blur-lg">
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-lg font-semibold text-blue-900">Email</label>
+                <div class="relative mt-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"><i
+                            class="fa-solid fa-envelope"></i></span>
+                    <input id="email" type="email" formControlName="email"
+                        class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90"
+                        placeholder="you@example.com" />
+                </div>
+                <div *ngIf="form.get('email')?.touched && form.get('email')?.errors"
+                    class="text-sm text-red-600 mt-1 space-y-1">
+                    <div *ngIf="form.get('email')?.errors?.['required']">
+                        Email is required
+                    </div>
+                    <div *ngIf="form.get('email')?.errors?.['email'] && !form.get('email')?.errors?.['required']">
+                        Please enter a valid email address
+                    </div>
+                    <div *ngIf="form.get('email')?.errors?.['minlength'] && !form.get('email')?.errors?.['required']">
+                        Email must be at least {{form.get('email')?.errors?.['minlength']?.requiredLength}} characters
+                    </div>
+                </div>
+            </div>
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-lg font-semibold text-blue-900">Password</label>
+                <div class="relative mt-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"><i
+                            class="fa-solid fa-lock"></i></span>
+                    <input id="password" type="password" formControlName="password"
+                        class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90"
+                        placeholder="••••••••" />
+                </div>
+                <div *ngIf="form.get('password')?.touched && form.get('password')?.errors"
+                    class="text-sm text-red-600 mt-1 space-y-1">
+                    <div *ngIf="form.get('password')?.errors?.['required']">
+                        Password is required
+                    </div>
+                    <div
+                        *ngIf="form.get('password')?.errors?.['minlength'] && !form.get('password')?.errors?.['required']">
+                        Password must be at least {{form.get('password')?.errors?.['minlength']?.requiredLength}}
+                        characters
+                    </div>
+                </div>
+            </div>
+            <!-- Donot Have an account -->
+            <div class="text-center text-base text-blue-900/80">
+                <p>Don't have an account? <a routerLink="/signup"
+                        class="text-cyan-600 hover:underline cursor-pointer font-bold">Register</a>
+                </p>
+            </div>
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" [disabled]="loading() || form.invalid"
+                    class="w-full loginbtn flex justify-center items-center bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-blue-600 hover:to-cyan-600 cursor-pointer text-white font-extrabold text-lg py-3 px-4 rounded-xl transition duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed animate-pop-in">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i>
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<footer
+    class="w-full glass-footer bg-gradient-to-r from-blue-700 to-cyan-400 text-white py-0 shadow-inner animate-fade-in font-['Segoe_UI','Arial',sans-serif]">
+    <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 gap-4">
+        <div class="flex items-center gap-3 animate-pop-in">
+            <a routerLink="/"><span
+                    class="font-extrabold text-2xl tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow">StaffSync</span></a>
+        </div>
+        <div class="hidden sm:block h-10 border-l-2 border-white/20 mx-6"></div>
+        <div class="text-sm text-blue-100 flex flex-col sm:flex-row gap-2 sm:gap-6 items-center animate-fade-in">
+            <span>&copy; {{ currentYear }} All rights reserved.</span>
+            <span class="hidden sm:inline">|</span>
+            <a href="https://github.com/your-org" target="_blank"
+                class="footer-link hover:underline flex items-center gap-2 transition-colors">
+                <i class="fa-brands fa-github"></i> <span>GitHub</span>
+            </a>
+            <a href="mailto:support@company.com"
+                class="footer-link hover:underline flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-envelope"></i> <span>Contact</span>
+            </a>
+        </div>
+    </div>
+</footer>

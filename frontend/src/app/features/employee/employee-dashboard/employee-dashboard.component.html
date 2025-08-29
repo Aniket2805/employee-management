@@ -1,0 +1,189 @@
+<div
+    class="staffsync-employee-dashboard min-h-[90vh] container mx-auto mt-10 mb-10 p-6 max-w-5xl animate-fade-in relative">
+    <ng-container *ngIf="employee() as emp">
+        <div *ngIf="emp.active; else notactive">
+            <!-- Header / Profile -->
+            <div class="header grid grid-cols-1 md:grid-cols-3 gap-6 items-center animate-pop-in mb-6">
+                <div class="profile-card flex items-center gap-4 md:col-span-2 shadow-xl animate-fade-in">
+                    <div class="avatar-wrap relative">
+                        <img src="https://ui-avatars.com/api/?name={{emp.firstName}}+{{emp.lastName}}&background=6C63FF&color=fff&size=256"
+                            alt="Profile" class="avatar" />
+                    </div>
+                    <div class="profile-meta text-xl md:text-3xl">
+                        <h2 class="name"><i class="fa-solid fa-user-tie icon"></i>Welcome, {{ emp.firstName }} {{
+                            emp.lastName }}
+                            <span *ngIf="emp.isMentor" class="mentor-badge"><i class="fa-solid fa-chalkboard-user"></i>
+                                Mentor</span>
+                        </h2>
+                        <p class="muted text-base md:text-xl"><i class="fa-solid fa-id-badge mr-2"></i> <strong>Employee
+                                ID:</strong> {{ emp.id }}</p>
+                    </div>
+                </div>
+
+                <div class="quick-stats md:col-span-1 animate-fade-in">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-primary-light"><i class="fa-solid fa-building-user"></i></div>
+                        <div class="stat-body">
+                            <div class="stat-title">Department</div>
+                            <div class="stat-value">{{ emp.department }}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card mt-3">
+                        <div class="stat-icon bg-accent-light"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="stat-body">
+                            <div class="stat-title">Onboarding</div>
+                            <div class="stat-value">{{ emp.onboardingStage }}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card mt-3 status">
+                        <div class="stat-icon"
+                            [ngClass]="{'bg-success-light': emp.onboardingStatus === 'COMPLETED', 'bg-warn-light': emp.onboardingStatus !== 'COMPLETED'}">
+                            <i class="fa-solid fa-flag-checkered"></i>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-title">Status</div>
+                            <div class="stat-value">{{ emp.onboardingStatus }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Columns -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
+                <div class="col-span-2">
+                    <!-- Personal / Mentor Card -->
+                    <div class="card animate-pop-in">
+                        <div class="card-head"><i class="fa-solid fa-id-card-clip"></i> Personal Details</div>
+                        <div class="card-body grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                            <div class="detail"><i class="fa-solid fa-envelope text-primary mr-1"></i> <span
+                                    class="label">Email</span>
+                                <div class="value">{{ emp.email }}</div>
+                            </div>
+                            <div class="detail"><i class="fa-solid fa-phone text-primary mr-1"></i> <span
+                                    class="label">Contact</span>
+                                <div class="value">
+                                    92-XXXX88XXXX
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!emp.isMentor && emp.mentor as mentor" class="card mt-6 animate-pop-in">
+                        <div class="card-head"><i class="fa-solid fa-user-tie"></i> Mentor Details</div>
+                        <div class="card-body">
+                            <div class="mentor-grid">
+                                <div class="card-body grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 mb-4">
+                                    <div class="detail"><i class="fa-solid fa-envelope text-primary mr-1"></i> <span
+                                            class="label">Email</span>
+                                        <div class="value">{{ mentor.email }}</div>
+                                    </div>
+                                    <div class="detail"><i class="fa-solid fa-phone text-primary mr-1"></i> <span
+                                            class="label">Contact</span>
+                                        <div class="value">
+                                            91-XXXXXXXXXX
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                                    <div class="detail"><i class="fa-solid fa-building-user mr-1"></i> <span
+                                            class="label">Department</span>
+                                        <div class="value">{{ mentor.department }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Card -->
+                <div>
+                    <div class="card doc-card animate-pop-in">
+                        <div class="card-head flex items-center gap-2"><i
+                                class="fa-solid fa-file-shield text-blue-500 animate-bounce"></i> Government ID Proof
+                            <span
+                                class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full ml-2 animate-fade-in">Secure</span>
+                        </div>
+                        <div class="card-body text-center">
+                            <ng-container *ngIf="document() as doc; else noDocumentBlock">
+                                <div class="doc-status success animate-pop-in">
+                                    <i class="fa-solid fa-circle-check text-green-500 animate-bounce text-3xl"></i>
+                                    <div class="doc-msg">Document Uploaded</div>
+                                    <div *ngIf="doc.approved" class="doc-sub flex items-center gap-1"><i
+                                            class="fa-solid fa-shield-check text-green-600"></i> Verified</div>
+                                    <div *ngIf="!doc.approved" class="doc-sub warn flex items-center gap-1"><i
+                                            class="fa-solid fa-hourglass-half text-yellow-500 animate-spin duration-1000"></i>
+                                        Pending Verification</div>
+                                    <!-- Document Metadata Section -->
+                                    <div class="doc-meta mt-4 text-left bg-gray-50 rounded-lg p-3 shadow-inner">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-file-lines text-blue-400"></i>
+                                            <span class="font-semibold">Original File:</span>
+                                            <span>{{ doc.originalFileName }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-file-code text-gray-400"></i>
+                                            <span class="font-semibold">Type:</span>
+                                            <span>{{ doc.fileType }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-weight-hanging text-gray-400"></i>
+                                            <span class="font-semibold">Size:</span>
+                                            <span>{{ doc.fileSize | number }} bytes</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-calendar-day text-gray-400"></i>
+                                            <span class="font-semibold">Uploaded:</span>
+                                            <span>{{ doc.uploadedAt | date:'medium' }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-id-badge text-gray-400"></i>
+                                            <span class="font-semibold">Document ID:</span>
+                                            <span>{{ doc.id }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #noDocumentBlock>
+                                <div class="doc-status missing animate-pop-in">
+                                    <i class="fa-solid fa-circle-xmark text-red-400 animate-bounce text-3xl"></i>
+                                    <div class="doc-msg">No document uploaded</div>
+                                    <button (click)="openUploadModal()" class="btn-primary mt-4 animate-pop-in"><i
+                                            class="fa-solid fa-upload"></i>
+                                        Upload</button>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Modal -->
+            <div *ngIf="showUploadModal" class="modal-backdrop bg-[#0a1833cc] bg-opacity-70 backdrop-blur-sm">
+                <div class="modal-card animate-pop-in relative overflow-hidden">
+                    <div class="modal-head bg-gradient-to-r from-blue-50 to-blue-100 animate-fade-in">
+                        <div class="modal-title flex items-center gap-2"><i
+                                class="fa-solid fa-file-arrow-up text-blue-500 animate-bounce"></i> Upload Document
+                        </div>
+                        <button class="modal-close" (click)="closeUploadModal()"><i
+                                class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body animate-fade-in">
+                        <app-dynamic-form [formSchema]="documentFormSchema"
+                            (formSubmit)="onDocumentFormSubmit($event,emp.id)"></app-dynamic-form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #notactive>
+            <div
+                class="bg-gradient-to-r from-gray-50 to-red-100 text-gray-800 p-6 rounded-xl mt-6 shadow animate-fade-in text-center">
+                <h2 class="text-4xl font-bold mb-6">Hi, {{emp.firstName+" "+emp.lastName}}</h2>
+                <i class="fa-solid fa-user-slash text-3xl mb-2 text-red-400 animate-bounce"></i>
+                <h5 class="font-bold text-lg">Your account is inactive.</h5>
+                <p class="mt-2 text-base">
+                    Please contact HR for more information.
+                </p>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

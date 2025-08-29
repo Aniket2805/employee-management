@@ -1,0 +1,102 @@
+<div
+    class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-cyan-100 via-white py-10 to-blue-100 font-[Segoe UI]">
+    <div class="w-full max-w-lg glass-signup-card shadow-2xl rounded-3xl p-0 border-0 overflow-hidden animate-fade-in">
+        <div
+            class="signup-hero flex flex-col items-center justify-center bg-gradient-to-r from-cyan-400 via-blue-400 to-blue-600 py-8 px-8">
+            <h2 class="text-4xl font-extrabold text-white drop-shadow flex items-center gap-3 animate-fade-in">
+                <i class="fa-solid fa-user-plus text-yellow-300 animate-bounce"></i> Create Account
+            </h2>
+            <p class="text-lg text-white/90 font-medium mt-2 animate-fade-in">Join the team and manage your journey!</p>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-7 px-10 py-10 bg-white/80 backdrop-blur-lg">
+            <!-- Full Name -->
+            <div>
+                <label for="fullName" class="block text-lg font-semibold text-blue-900">Name</label>
+                <div class="relative mt-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"><i
+                            class="fa-solid fa-user"></i></span>
+                    <input id="fullName" type="text" formControlName="fullName" placeholder="Your full name"
+                        class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90" />
+                </div>
+                <div *ngIf="form.get('fullName')?.touched && form.get('fullName')?.errors"
+                    class="text-sm text-red-600 mt-1 space-y-1">
+                    <div *ngIf="form.get('fullName')?.errors?.['required']">Name is required</div>
+                    <div
+                        *ngIf="form.get('fullName')?.errors?.['minlength'] && !form.get('fullName')?.errors?.['required']">
+                        Name must be at least {{form.get('fullName')?.errors?.['minlength']?.requiredLength}} characters
+                    </div>
+                </div>
+            </div>
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-lg font-semibold text-blue-900">Email</label>
+                <div class="relative mt-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"><i
+                            class="fa-solid fa-envelope"></i></span>
+                    <input id="email" type="email" formControlName="email" placeholder="you@example.com"
+                        class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90" />
+                </div>
+                <div *ngIf="form.get('email')?.touched && form.get('email')?.errors"
+                    class="text-sm text-red-600 mt-1 space-y-1">
+                    <div *ngIf="form.get('email')?.errors?.['required']">Email is required</div>
+                    <div *ngIf="form.get('email')?.errors?.['email'] && !form.get('email')?.errors?.['required']">Please
+                        enter a valid email address</div>
+                    <div *ngIf="form.get('email')?.errors?.['minlength'] && !form.get('email')?.errors?.['required']">
+                        Email must be at least {{form.get('email')?.errors?.['minlength']?.requiredLength}} characters
+                    </div>
+                </div>
+            </div>
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-lg font-semibold text-blue-900">Password</label>
+                <div class="relative mt-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"><i
+                            class="fa-solid fa-lock"></i></span>
+                    <input id="password" type="password" formControlName="password" placeholder="••••••••"
+                        class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90" />
+                </div>
+                <div *ngIf="form.get('password')?.touched && form.get('password')?.errors"
+                    class="text-sm text-red-600 mt-1 space-y-1">
+                    <div *ngIf="form.get('password')?.errors?.['required']">Password is required</div>
+                    <div
+                        *ngIf="form.get('password')?.errors?.['minlength'] && !form.get('password')?.errors?.['required']">
+                        Password must be at least {{form.get('password')?.errors?.['minlength']?.requiredLength}}
+                        characters</div>
+                </div>
+            </div>
+            <!-- Role -->
+            <div>
+                <label for="role" class="block text-lg font-semibold text-blue-900">Role</label>
+                <div class="relative mt-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"><i
+                            class="fa-solid fa-user-tie"></i></span>
+                    <select id="role" formControlName="role"
+                        class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90">
+                        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Already have an account -->
+            <div class="text-center text-base text-blue-900/80">
+                <p>Already have an account? <a routerLink="/login"
+                        class="text-cyan-600 hover:underline cursor-pointer font-bold">Login</a></p>
+            </div>
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" [disabled]="loading || form.invalid"
+                    class="w-full flex justify-center items-center bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-blue-600 hover:to-cyan-600 cursor-pointer text-white font-extrabold text-lg py-3 px-4 rounded-xl transition duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed animate-pop-in">
+                    <i class="fa-solid fa-user-plus mr-2"></i>
+                    Register
+                </button>
+            </div>
+            <!-- Success Message -->
+            <p *ngIf="success" class="text-center text-sm text-green-600 mt-2">
+                {{ success() }}
+            </p>
+            <!-- Error Message -->
+            <p *ngIf="error" class="text-center text-sm text-red-600 mt-2">
+                {{ error() }}
+            </p>
+        </form>
+    </div>
+</div>

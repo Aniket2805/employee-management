@@ -1,0 +1,83 @@
+<div
+    class="min-h-[90vh] font-[Segoe UI] flex justify-center items-center sm:p-10 p-4 bg-gradient-to-r from-gray-50 via-blue-50 to-cyan-50">
+    <div class="">
+        <div *ngIf="employee() as emp">
+            <div *ngIf="emp.active; else notactive">
+                <div *ngIf="emp?.mentor as mentor; else nomentor" class="card animate-pop-in md:min-w-2xl sm:p-10 p-6">
+                    <div class="card-head">
+                        <div class="mentor-avatar-wrap">
+                            <img src="https://ui-avatars.com/api/?name={{mentor.firstName}}+{{mentor.lastName}}&background=6C63FF&color=fff&size=128"
+                                alt="Profile"
+                                class="w-20 h-20 rounded-full border-4 border-blue-200 shadow-md animate-pop-in" />
+                        </div> {{mentor.firstName+" "+mentor.lastName}} - Your Mentor
+                    </div>
+                    <div class="card-body">
+                        <div class="mentor-grid">
+                            <div class="card-body grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 mb-4">
+                                <div class="detail"><i class="fa-solid fa-hashtag info-icon mr-1"></i> <span
+                                        class="label">Mentor
+                                        Employee
+                                        Id</span>
+                                    <div class="value">{{ mentor.id}}</div>
+                                </div>
+                                <div class="detail"><i class="fa-solid fa-phone text-primary mr-1"></i> <span
+                                        class="label">Contact</span>
+                                    <div class="value">
+                                        91-XXXXXXXXXX
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 mb-4">
+                                <div class="detail"><i class="fa-solid fa-envelope text-primary mr-1"></i> <span
+                                        class="label">Email</span>
+                                    <div class="value">{{ mentor.email }}</div>
+                                </div>
+                                <div class="detail"><i class="fa-solid fa-circle-check info-icon text-success mr-1"
+                                        *ngIf="mentor.active"></i>
+                                    <i class="fa-solid fa-circle-xmark info-icon text-danger mr-1"
+                                        *ngIf="!mentor.active"></i>
+                                    <span class="label">Status</span>
+                                    <div class="value">
+                                        {{ mentor.active ? 'Active' : 'Inactive' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                                <div class="detail"><i class="fa-solid fa-building-user mr-1"></i> <span
+                                        class="label">Department</span>
+                                    <div class="value">{{ mentor.department }}</div>
+                                </div>
+                                <div class="detail"><i class="fa-solid fa-crown info-icon text-warning mr-1"></i> <span
+                                        class="label">Role</span>
+                                    <div class="value">Mentor</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #nomentor>
+                    <div class="mentor-detail-center">
+                        <div class="mentor-card-light flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-crown text-success text-5xl animate-bounce mb-3"></i>
+                            <h4 class="text-2xl font-bold text-success mb-1 text-center">You are a Mentor!</h4>
+                            <p class="text-secondary text-center text-base max-w-md">
+                                You can't have a mentor assigned to you because you are already a mentor for others.<br>
+                                <span class="font-semibold">Keep inspiring and leading by example!</span>
+                            </p>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <ng-template #notactive>
+                <div
+                    class="bg-gradient-to-r from-gray-50 to-red-100 text-gray-800 p-6 rounded-xl mt-6 shadow animate-fade-in text-center">
+                    <i class="fa-solid fa-user-slash text-3xl mb-2 text-red-400 animate-bounce"></i>
+                    <h5 class="font-bold text-lg">Your account is inactive.</h5>
+                    <p class="mt-2 text-base">
+                        Please contact HR for more information.
+                    </p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

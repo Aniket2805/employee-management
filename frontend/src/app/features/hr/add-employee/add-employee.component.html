@@ -1,0 +1,56 @@
+<div
+    class="min-h-[90vh] flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 font-[Segoe UI] py-10">
+    <div class="p-2 bg-white rounded-3xl shadow-2xl w-full max-w-lg animate-fade-in">
+        <div class="flex flex-col items-center p-8">
+            <div class="mb-6 flex flex-col items-center">
+                <div class="bg-gray-800 rounded-full w-16 h-16 flex justify-center items-center p-4 mb-2 shadow-lg">
+                    <i *ngIf="!isEditMode" class="fa-solid fa-user-tie text-2xl text-white"></i>
+                    <i *ngIf="isEditMode" class="fa-solid fa-user-pen text-2xl text-white"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold text-gray-900 mb-1 tracking-tight">{{!isEditMode ? 'Add New Employee'
+                    : 'Update Employee'}}</h2>
+                <p class="text-gray-500 text-sm">
+                    Fill in the details below to
+                    {{!isEditMode ? 'add a new' : 'update this'}} employee.</p>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-5 w-full">
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-user"></i>
+                        First Name</label>
+                    <input formControlName="firstName" class="input-field" placeholder="Enter first name" />
+                    <div *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched"
+                        class="text-red-500 text-xs">
+                        <i class="fa-solid fa-circle-exclamation mr-1"></i> First Name is required.
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-user"></i>
+                        Last Name</label>
+                    <input formControlName="lastName" class="input-field" placeholder="Enter last name" />
+                    <div *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched"
+                        class="text-red-500 text-xs">
+                        <i class="fa-solid fa-circle-exclamation mr-1"></i> Last Name is required.
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-gray-700 flex items-center gap-2"><i
+                            class="fa-solid fa-building"></i> Department</label>
+                    <input formControlName="department" class="input-field" placeholder="Enter department" />
+                    <div *ngIf="form.get('department')?.invalid && form.get('department')?.touched"
+                        class="text-red-500 text-xs">
+                        <i class="fa-solid fa-circle-exclamation mr-1"></i> Department is required.
+                    </div>
+                </div>
+                <label class="flex items-center gap-2 text-gray-700 font-semibold cursor-pointer">
+                    <input type="checkbox" formControlName="isMentor" class="accent-black w-4 h-4" />
+                    <i class="fa-solid fa-crown text-yellow-500"></i> Is Mentor
+                </label>
+                <button type="submit" [disabled]="form.invalid"
+                    class="bg-black p-3 rounded-xl cursor-pointer text-white hover:bg-gray-900 transition-all duration-300 font-bold text-lg flex items-center justify-center gap-2 shadow-lg"
+                    [ngClass]="{'opacity-50 cursor-not-allowed': form.invalid}">
+                    <i class="fa-solid fa-paper-plane"></i> {{isEditMode ? 'Update' : 'Add Employee'}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

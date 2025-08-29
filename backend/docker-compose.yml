@@ -1,0 +1,102 @@
+version: "3.7"
+
+services:
+  eureka-server:
+    build: registry-service
+    ports:
+      - "8761:8761"
+    networks:
+      - sec-network
+
+  user-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: userdb
+    ports:
+      - "5432:5432"
+    networks:
+      - sec-network
+    volumes:
+      - user_pgdata:/var/lib/postgresql/data
+
+  it-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: itdb
+    ports:
+      - "5434:5432"
+    networks:
+      - sec-network
+    volumes:
+      - it_pgdata:/var/lib/postgresql/data
+
+  hr-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: hrdb
+    ports:
+      - "5435:5432"
+    networks:
+      - sec-network
+    volumes:
+      - hr_pgdata:/var/lib/postgresql/data
+
+  auth-service:
+    build: security-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - user-db
+      - eureka-server
+    networks:
+      - sec-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/userdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  hr-service:
+    build: ./hr-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - hr-db
+      - eureka-server
+    networks:
+      - sec-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://hr-db:5432/hrdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  it-service:
+    build: ./it-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - it-db
+      - eureka-server
+    networks:
+      - sec-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://it-db:5432/itdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+networks:
+  sec-network:
+    driver: bridge
+
+volumes:
+  user_pgdata:
+  it_pgdata:
+  hr_pgdata:

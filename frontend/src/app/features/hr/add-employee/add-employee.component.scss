@@ -1,0 +1,224 @@
+.add-employee-bg {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1.2rem 3.5rem 1.2rem;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+
+.add-employee-card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 8px 40px 0 rgba(60, 72, 88, 0.13);
+    padding: 2.5rem 2.2rem 2.2rem 2.2rem;
+    max-width: 430px;
+    width: 100%;
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-field {
+    border: 1.5px solid #e5e7eb;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.8rem;
+    color: #222b45;
+    background: #f8fafc;
+    font-size: 1.08rem;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+    box-shadow: 0 1px 2px 0 rgba(60, 72, 88, 0.04);
+    margin-bottom: 2px;
+}
+
+.input-field:focus {
+    border: 1.5px solid #222b45;
+    background: #fff;
+    box-shadow: 0 2px 8px 0 rgba(60, 72, 88, 0.10);
+}
+
+.input-field.ng-invalid.ng-touched {
+    border: 1.5px solid #ef4444;
+    background: #fef2f2;
+}
+
+button[type="submit"] {
+    background: linear-gradient(90deg, #222b45 60%, #4f8cff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.95rem 0;
+    font-size: 1.13rem;
+    font-weight: 700;
+    box-shadow: 0 2px 12px 0 rgba(60, 72, 88, 0.10);
+    margin-top: 0.5rem;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+    background: linear-gradient(90deg, #111827 60%, #2563eb 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 24px 0 rgba(60, 72, 88, 0.13);
+}
+
+button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+input[type="checkbox"] {
+    accent-color: #222b45;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .add-employee-card {
+        padding: 1.2rem 0.5rem;
+        border-radius: 1.1rem;
+        max-width: 98vw;
+    }
+
+    .add-employee-bg {
+        padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+    }
+}
+
+// Add Employee - Modern Professional Styles
+
+.add-employee-bg {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1.2rem 3.5rem 1.2rem;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+
+.add-employee-card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 8px 40px 0 rgba(60, 72, 88, 0.13);
+    padding: 2.5rem 2.2rem 2.2rem 2.2rem;
+    max-width: 430px;
+    width: 100%;
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-field {
+    border: 1.5px solid #e5e7eb;
+    padding: 0.95rem 1.2rem;
+    border-radius: 0.9rem;
+    color: #222b45;
+    background: #f8fafc;
+    font-size: 1.08rem;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+    box-shadow: 0 1px 2px 0 rgba(60, 72, 88, 0.04);
+    margin-bottom: 2px;
+}
+
+.input-field:focus {
+    border: 1.5px solid #222b45;
+    background: #fff;
+    box-shadow: 0 2px 8px 0 rgba(60, 72, 88, 0.10);
+}
+
+.input-field.ng-invalid.ng-touched {
+    border: 1.5px solid #ef4444;
+    background: #fef2f2;
+}
+
+button[type="submit"] {
+    background: linear-gradient(90deg, #222b45 60%, #4f8cff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.1rem 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    box-shadow: 0 2px 12px 0 rgba(60, 72, 88, 0.10);
+    margin-top: 0.7rem;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    letter-spacing: 0.5px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+    background: linear-gradient(90deg, #111827 60%, #2563eb 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 24px 0 rgba(60, 72, 88, 0.13);
+}
+
+button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+input[type="checkbox"] {
+    accent-color: #222b45;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: 0.5rem;
+}
+
+// Animations for icons
+.fa-user-plus,
+.fa-paper-plane,
+.fa-crown {
+    animation: popIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+// Responsive
+@media (max-width: 600px) {
+    .add-employee-card {
+        padding: 1.2rem 0.5rem;
+        border-radius: 1.1rem;
+        max-width: 98vw;
+    }
+
+    .add-employee-bg {
+        padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+    }
+}

@@ -1,0 +1,100 @@
+/* StaffSync - Navbar styles (clean, professional, responsive) */
+.navbar,
+.glass-navbar {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(7, 23, 63, 0.92), rgba(13, 37, 86, 0.9));
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
+    backdrop-filter: blur(8px);
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1rem;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    z-index: 50;
+}
+
+.navbar .brand .title {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #06b6d4 0%, #7dd3fc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: #dbeafe;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.4rem 0.2rem;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 160ms ease, transform 160ms ease;
+}
+
+.nav-link:hover {
+    color: #7dd3fc;
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    color: #7dd3fc;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 3px;
+    width: 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #06b6d4, #7dd3fc);
+    transition: width 220ms ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-cta {
+    background: linear-gradient(90deg, #06b6d4, #7dd3fc);
+    color: white;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.8rem;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+/* Responsive adjustments */
+@media (max-width: 920px) {
+    .nav-items {
+        gap: 0.6rem;
+    }
+
+    .navbar .brand .title {
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar {
+        border-radius: 0;
+        padding: 0.6rem;
+    }
+
+    .nav-items {
+        display: none;
+    }
+}

@@ -1,0 +1,56 @@
+<div class="perf-reviews min-h-screen flex flex-col items-center justify-start py-8 px-2 sm:px-6">
+    <div class="header w-full max-w-6xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
+        <div class="header-title flex flex-col gap-2">
+            <h2 class="title font-display flex items-center gap-3 text-2xl sm:text-3xl bg-gradient-to-r from-blue-400 to-blue-700 bg-clip-text text-transparent drop-shadow">Performance Reviews</h2>
+            <div class="subtitle text-base sm:text-lg">Upcoming reviews and their status — manage and schedule
+                follow-ups</div>
+        </div>
+        <div class="controls flex items-center gap-4 mt-4 sm:mt-0">
+            <div class="count-badge flex items-center gap-2" *ngIf="reviews?.length">{{ reviews.length }} upcoming</div>
+            <button class="btn-refresh flex items-center gap-2" (click)="loadUpcoming()">Refresh</button>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="loading-state w-full max-w-6xl mx-auto text-center text-gray-500 py-12">Loading reviews…
+    </div>
+
+    <div *ngIf="!loading && (!reviews || reviews.length === 0)"
+        class="empty-state w-full max-w-6xl mx-auto text-center text-gray-600 py-12">
+        No upcoming reviews.
+    </div>
+
+    <div *ngIf="reviews?.length"
+        class="reviews-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl mx-auto">
+        <div *ngFor="let r of reviews"
+            class="review-card flex flex-col shadow-xl rounded-2xl bg-white/80 backdrop-blur-md border border-blue-100 hover:scale-[1.02] transition-transform duration-200">
+            <div class="card-top flex items-start gap-5 p-4 pb-0">
+                <img class="avatar shadow-md border-2 border-blue-100"
+                    [src]="'https://ui-avatars.com/api/?name=' + (r.employee?.firstName || '') + '+' + (r.employee?.lastName || '') + '&background=6C63FF&color=fff&size=128'"
+                    alt="avatar" />
+                <div class="meta flex-1 flex flex-col gap-1">
+                    <div class="name-row flex items-center justify-between gap-3">
+                        <div>
+                            <div class="emp-name flex items-center gap-2 text-lg font-semibold">{{ r.employee?.firstName
+                                }} {{ r.employee?.lastName }}</div>
+                            <div class="emp-meta flex items-center gap-2 text-sm text-blue-900/70">{{
+                                r.employee?.department }} • {{ r.employee?.email }}</div>
+                        </div>
+                        <div class="status-pill flex items-center gap-2 px-3 py-1"
+                            [ngClass]="{ 'approved': r.status === 'APPROVED', 'pending': r.status !== 'APPROVED' }">{{
+                            r.status || 'PENDING' }}</div>
+                    </div>
+                    <div class="schedule flex items-center gap-2 mt-2 text-sm text-blue-900/80">Scheduled: <strong>{{
+                            r.scheduledDate | date:'mediumDate' }}</strong></div>
+                </div>
+            </div>
+
+            <div class="notes flex items-center gap-2 mt-4 text-sm text-blue-900/70">{{ r.notes || 'No notes provided.'
+                }}</div>
+
+            <div class="card-actions flex items-center gap-3 mt-4">
+                <button class="btn-primary flex items-center gap-2">View</button>
+                <button class="btn-outline flex items-center gap-2">Reschedule</button>
+            </div>
+        </div>
+    </div>
+</div>
