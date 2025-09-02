@@ -3,14 +3,14 @@ export interface Task {
     description: string
     title: string
     department: string
-    formlyConfigJson: FormlyConfigJson
+    formlyConfigJson?: FormlyConfigJson | null
     taskId: number
     status: string
 }
 
 export interface FormlyConfigJson {
-    formTitle: string
-    formControls: FormControl[]
+    formTitle?: string
+    formControls?: FormControl[]
 }
 
 export interface FormControl {

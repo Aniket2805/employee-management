@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: userdb
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - sec-network
     volumes:
@@ -46,6 +46,7 @@ services:
       - sec-network
     volumes:
       - hr_pgdata:/var/lib/postgresql/data
+      - ./init/hr:/docker-entrypoint-initdb.d
 
   auth-service:
     build: security-service
@@ -80,7 +81,7 @@ services:
   it-service:
     build: ./it-service
     ports:
-      - "8085:8085"
+      - "8082:8082"
     depends_on:
       - it-db
       - eureka-server

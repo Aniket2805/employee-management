@@ -3,8 +3,8 @@ export interface Employee {
     fullName?: string;
     firstName: string;
     lastName: string;
-    email: string | null;
-    password: string | null;
+    email?: string | null;
+    password?: string | null;
     department: string;
     onboardingStage: string;
     onboardingStatus: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'OFFBOARDED';

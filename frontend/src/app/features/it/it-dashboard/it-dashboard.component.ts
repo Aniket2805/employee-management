@@ -44,12 +44,6 @@ export class ItDashboardComponent {
     this.store.dispatch(EmployeeActions.loadEmployees());
   }
 
-  startOnboarding(empId: number) {
-    this.employeeService.startOnboarding(empId).subscribe(() => {
-      this.store.dispatch(EmployeeActions.loadEmployees());
-    });
-  }
-
   goToEmployeeTasks(empId: number) {
     this.store.dispatch(EmployeeActions.setSelectedEmployee({ employeeId: empId }));
     this.router.navigate(['/it/employees', 'tasks', empId]);
@@ -59,19 +53,6 @@ export class ItDashboardComponent {
   viewEmployee(empId: number) {
     this.selectedEmp = this.employees()?.data?.find((e: any) => e.id === empId);
     this.modalOpen = true;
-  }
-  editEmployee(empId: number) {
-    this.router.navigate(['/it/employees', 'edit', empId]);
-  }
-  deleteEmployee(empId: number) {
-    if (confirm('Are you sure you want to delete this employee?')) {
-      this.employeeService.deleteEmployee(empId).subscribe(() => {
-        this.store.dispatch(EmployeeActions.loadEmployees());
-      });
-    }
-  }
-  addEmployee() {
-    this.router.navigate(['/it/employees', 'add']);
   }
   modelOpen() {
     return this.modalOpen;

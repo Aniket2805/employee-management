@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/hrdb
+    url: jdbc:postgresql://postgres:5432/itdb
     driverClassName: org.postgresql.Driver
     username: postgres
     password: 1234
@@ -16,7 +16,6 @@ spring:
         format_sql: true
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
-
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -26,4 +25,4 @@ springdoc:
 eureka:
   client:
     service-url:
-      defaultZone : http://localhost:8761/eureka/
+      defaultZone : http://eureka-server:8761/eureka/

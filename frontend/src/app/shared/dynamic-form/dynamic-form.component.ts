@@ -31,7 +31,7 @@ export class DynamicFormComponent implements OnInit {
 
   buildForm(): void {
     const group: { [key: string]: any } = {};
-    this.formSchema.formControls.forEach((control: FormField) => {
+    this.formSchema?.formControls?.forEach((control: FormField) => {
       const validators: ValidatorFn[] = [];
       control.validators?.forEach((v: FieldValidator) => {
         if (v.validatorName === 'required' && v.required) {
@@ -127,7 +127,7 @@ export class DynamicFormComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       const formData = new FormData();
-      this.formSchema.formControls.forEach((control) => {
+      this.formSchema.formControls?.forEach((control) => {
         if (control.type === 'file') {
           // Use 'file' as the key to match backend API
           formData.append('file', this.fileControls[control.name] as Blob);
