@@ -1,6 +1,5 @@
 package com.backend.securityService.service;
 import com.backend.securityService.dto.LoginRequest;
-import com.backend.securityService.dto.LoginResponse;
 import com.backend.securityService.exception.AuthenticationException;
 import com.backend.securityService.exception.InvalidPasswordException;
 import com.backend.securityService.exception.UserNotFoundException;
@@ -14,10 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.mockito.*;
-import org.springframework.security.authentication.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
