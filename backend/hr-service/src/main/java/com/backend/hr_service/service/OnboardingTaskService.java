@@ -186,15 +186,6 @@ public class OnboardingTaskService {
     public Map<String, String> deleteAllTasksByEmpId(Long employeeId) {
         taskRepo.deleteAllByEmployeeId(employeeId);
 
-        // Audit log: deleted all tasks for employee
-//        logService.logAction(
-//                "OnboardingTask",
-//                "EMPLOYEE_" + employeeId,
-//                "DELETE_ALL",
-//                AuthForwardingFilter.getCurrentUser(),
-//                Map.of("employeeId", employeeId)
-//        );
-
         Map<String, String> res = new HashMap<>();
         res.put("msg", "Tasks Deleted Successfully");
         return res;

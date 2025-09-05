@@ -41,19 +41,6 @@ public class PerformanceReviewService {
     }
 
     public void deleteReview(Long employeeId) {
-        // ✅ Fetch the reviews first
-//        PerformanceReview reviewToDelete = reviewRepo.findByEmployeeId(employeeId);
-//
-//        // ✅ Log before deleting
-//        logService.logAction(
-//                "PerformanceReview",
-//                String.valueOf(reviewToDelete.getId()),
-//                "DELETE",
-//                AuthForwardingFilter.getCurrentUser(),
-//                reviewToDelete
-//        );
-
-        // ✅ Now delete them
         reviewRepo.deleteByEmployeeId(employeeId);
     }
 

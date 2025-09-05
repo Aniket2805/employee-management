@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "auth-service")
+@FeignClient(name = "security-service")
 public interface AuthClient {
 
     @GetMapping("auth/validate")

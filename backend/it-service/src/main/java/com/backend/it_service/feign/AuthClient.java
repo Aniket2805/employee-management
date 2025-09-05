@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "auth-service")
+@FeignClient(name = "security-service")
 public interface AuthClient {
 
     record RegisterRequest(Long employeeId,String fullName,String email, String password, Roles role) {}

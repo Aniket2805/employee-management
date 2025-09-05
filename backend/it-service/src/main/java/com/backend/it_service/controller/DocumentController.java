@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,8 @@ import java.io.FileInputStream;
 @RequiredArgsConstructor
 @CrossOrigin
 public class DocumentController {
-    @Autowired
-    private DocumentService documentService;
+
+    private final DocumentService documentService;
 
     @PostMapping(value = "/upload/{employeeId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('EMPLOYEE')")
