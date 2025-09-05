@@ -1,8 +1,8 @@
-package com.backend.securityService.controller;
-import com.backend.securityService.exception.AuthenticationException;
-import com.backend.securityService.exception.InvalidPasswordException;
-import com.backend.securityService.exception.UserNotFoundException;
-import com.backend.securityService.dto.ResponseDTO;
+package com.backend.security_service.controller;
+import com.backend.security_service.exception.AuthenticationException;
+import com.backend.security_service.exception.InvalidPasswordException;
+import com.backend.security_service.exception.UserNotFoundException;
+import com.backend.security_service.dto.ResponseDTO;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;

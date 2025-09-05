@@ -1,4 +1,4 @@
-package com.backend.securityService;
+package com.backend.security_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

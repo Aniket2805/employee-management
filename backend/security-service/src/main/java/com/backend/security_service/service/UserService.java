@@ -1,19 +1,17 @@
-package com.backend.securityService.service;
-import com.backend.securityService.dto.LoginRequest;
-import com.backend.securityService.dto.LoginResponse;
-import com.backend.securityService.exception.AuthenticationException;
-import com.backend.securityService.exception.InvalidPasswordException;
-import com.backend.securityService.exception.UserNotFoundException;
-import com.backend.securityService.model.ChangePasswordRequest;
-import com.backend.securityService.model.UserDetailsResponse;
-import com.backend.securityService.model.Users;
-import com.backend.securityService.repository.UserRepo;
+package com.backend.security_service.service;
+import com.backend.security_service.dto.LoginRequest;
+import com.backend.security_service.dto.LoginResponse;
+import com.backend.security_service.exception.AuthenticationException;
+import com.backend.security_service.exception.InvalidPasswordException;
+import com.backend.security_service.exception.UserNotFoundException;
+import com.backend.security_service.model.ChangePasswordRequest;
+import com.backend.security_service.model.UserDetailsResponse;
+import com.backend.security_service.model.Users;
+import com.backend.security_service.repository.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional

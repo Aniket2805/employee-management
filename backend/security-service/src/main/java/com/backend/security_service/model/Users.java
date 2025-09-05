@@ -1,4 +1,4 @@
-package com.backend.securityService.model;
+package com.backend.security_service.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

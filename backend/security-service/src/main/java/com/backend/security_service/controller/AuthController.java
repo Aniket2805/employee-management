@@ -1,13 +1,13 @@
-package com.backend.securityService.controller;
+package com.backend.security_service.controller;
 
-import com.backend.securityService.dto.LoginRequest;
-import com.backend.securityService.dto.LoginResponse;
-import com.backend.securityService.dto.RegisterRequest;
-import com.backend.securityService.dto.ResponseDTO;
-import com.backend.securityService.model.ChangePasswordRequest;
-import com.backend.securityService.model.UserDetailsResponse;
-import com.backend.securityService.model.Users;
-import com.backend.securityService.service.UserService;
+import com.backend.security_service.dto.LoginRequest;
+import com.backend.security_service.dto.LoginResponse;
+import com.backend.security_service.dto.RegisterRequest;
+import com.backend.security_service.dto.ResponseDTO;
+import com.backend.security_service.model.ChangePasswordRequest;
+import com.backend.security_service.model.UserDetailsResponse;
+import com.backend.security_service.model.Users;
+import com.backend.security_service.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;

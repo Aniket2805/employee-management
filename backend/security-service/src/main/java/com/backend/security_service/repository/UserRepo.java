@@ -1,5 +1,5 @@
-package com.backend.securityService.repository;
-import com.backend.securityService.model.Users;
+package com.backend.security_service.repository;
+import com.backend.security_service.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

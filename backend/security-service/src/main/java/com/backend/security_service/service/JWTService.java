@@ -1,6 +1,6 @@
-package com.backend.securityService.service;
+package com.backend.security_service.service;
 
-import com.backend.securityService.model.Users;
+import com.backend.security_service.model.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
