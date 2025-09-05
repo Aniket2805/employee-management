@@ -1,0 +1,7 @@
+services:
+  - type: static
+    name: angular-frontend
+    env: static
+    buildCommand: ng build --configuration production
+    staticPublishPath: dist/frontend
+    rootDir: frontend
