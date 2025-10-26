@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${DATASOURCE_URL}
+    url: ${DATASOURCE_URL}user-db
     driverClassName: org.postgresql.Driver
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
@@ -25,4 +25,4 @@ springdoc:
 eureka:
   client:
     service-url:
-      defaultZone : https://registry-service-rq51.onrender.com/eureka/
+      defaultZone : https://registery-service.up.railway.app/eureka/
