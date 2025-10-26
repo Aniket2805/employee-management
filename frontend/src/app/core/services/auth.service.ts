@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private jwtHelper = new JwtHelperService();
-  private apiUrl = 'http://localhost:8083/auth';
+  private apiUrl = environment.authApiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -35,10 +36,10 @@ export class AuthService {
     );
   }
 
-  signup(name: string, email: string, password: string, role: string) {
+  signup(fullName: string, email: string, password: string, role: string) {
     return this.http.post<{ message: string }>(
       `${this.apiUrl}/register`,
-      { name, email, password, role }
+      { fullName, email, password, role }
     );
   }
 

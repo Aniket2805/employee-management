@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee, NewEmployeePayload } from '../../models/employee.model';
-import { Task } from '../../models/task.model';
 import { DocumentMeta } from '../../models/document.model';
+import { environment } from '../../../environments/environment';
+import { Task } from '../../models/task.model';
 import { AuditLog } from '../../models/auditlog.model';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-
-  private HR_APIURL = 'http://localhost:8081/api'; // Adjust base path as needed
-  private IT_APIURL = 'http://localhost:8082/api'; // Adjust base path as needed
+  private HR_APIURL = environment.hrApiUrl;
+  private IT_APIURL = environment.itApiUrl;
 
   constructor(private http: HttpClient) { }
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public interface AuthClient {
 
     @GetMapping("auth/validate")
-    UserDetailsResponse validateToken(@RequestParam String token);
+    public UserDetailsResponse validateToken(@RequestParam String token);
 
     @DeleteMapping("auth/employee/{employeeId}")
     public ResponseEntity<String> deleteAccByEmployeeId(@PathVariable Long employeeId);
