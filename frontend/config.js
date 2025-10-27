@@ -22,8 +22,3 @@ const fileContent = `(function(window) {
 })(this);`;
 
 fs.writeFileSync(targetPath, fileContent, { encoding: 'utf8' });
-
-console.log(`Generated env.js at ${targetPath}`);
-console.log(`AUTH_API_URL: ${AUTH_API_URL}`);
-console.log(`HR_API_URL: ${HR_API_URL}`);
-console.log(`IT_API_URL: ${IT_API_URL}`);
