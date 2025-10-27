@@ -171,3 +171,12 @@
         border-radius: 1rem;
     }
 }
+
+/* Replacements for Tailwind's space-y utilities used in this component */
+.stack--space-2 > * + * {
+    margin-top: 0.5rem; /* Tailwind space-y-2 */
+}
+
+.stack--space-4 > * + * {
+    margin-top: 1rem; /* Tailwind space-y-4 */
+}

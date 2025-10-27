@@ -8,7 +8,7 @@
             </h2>
             <p class="text-lg text-white/90 font-medium mt-2 animate-fade-in">Sign in to your account</p>
         </div>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-7 px-10 py-10 bg-white/80 backdrop-blur-lg">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="stack--space-7 px-10 py-10 bg-white/80 backdrop-blur-lg">
             <!-- Email -->
             <div>
                 <label for="email" class="block text-lg font-semibold text-blue-900">Email</label>
@@ -20,7 +20,7 @@
                         placeholder="you@example.com" />
                 </div>
                 <div *ngIf="form.get('email')?.touched && form.get('email')?.errors"
-                    class="text-sm text-red-600 mt-1 space-y-1">
+                    class="text-sm text-red-600 mt-1 stack--space-1">
                     <div *ngIf="form.get('email')?.errors?.['required']">
                         Email is required
                     </div>
@@ -43,7 +43,7 @@
                         placeholder="••••••••" />
                 </div>
                 <div *ngIf="form.get('password')?.touched && form.get('password')?.errors"
-                    class="text-sm text-red-600 mt-1 space-y-1">
+                    class="text-sm text-red-600 mt-1 stack--space-1">
                     <div *ngIf="form.get('password')?.errors?.['required']">
                         Password is required
                     </div>

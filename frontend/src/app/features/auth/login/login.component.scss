@@ -77,3 +77,12 @@ button[type="submit"] {
 .animate-pop-in {
     animation: popIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Replacements for Tailwind's space-y utilities used in this component */
+.stack--space-1 > * + * {
+    margin-top: 0.25rem; /* Tailwind space-y-1 */
+}
+
+.stack--space-7 > * + * {
+    margin-top: 1.75rem; /* Tailwind space-y-7 */
+}

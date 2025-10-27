@@ -8,7 +8,7 @@
             </h2>
             <p class="text-lg text-white/90 font-medium mt-2 animate-fade-in">Join the team and manage your journey!</p>
         </div>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-7 px-10 py-10 bg-white/80 backdrop-blur-lg">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="stack--space-7 px-10 py-10 bg-white/80 backdrop-blur-lg">
             <!-- Full Name -->
             <div>
                 <label for="fullName" class="block text-lg font-semibold text-blue-900">Name</label>
@@ -19,7 +19,7 @@
                         class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90" />
                 </div>
                 <div *ngIf="form.get('fullName')?.touched && form.get('fullName')?.errors"
-                    class="text-sm text-red-600 mt-1 space-y-1">
+                    class="text-sm text-red-600 mt-1 stack--space-1">
                     <div *ngIf="form.get('fullName')?.errors?.['required']">Name is required</div>
                     <div
                         *ngIf="form.get('fullName')?.errors?.['minlength'] && !form.get('fullName')?.errors?.['required']">
@@ -37,7 +37,7 @@
                         class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90" />
                 </div>
                 <div *ngIf="form.get('email')?.touched && form.get('email')?.errors"
-                    class="text-sm text-red-600 mt-1 space-y-1">
+                    class="text-sm text-red-600 mt-1 stack--space-1">
                     <div *ngIf="form.get('email')?.errors?.['required']">Email is required</div>
                     <div *ngIf="form.get('email')?.errors?.['email'] && !form.get('email')?.errors?.['required']">Please
                         enter a valid email address</div>
@@ -56,7 +56,7 @@
                         class="block w-full pl-10 pr-4 py-3 border border-blue-200 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium bg-white/90" />
                 </div>
                 <div *ngIf="form.get('password')?.touched && form.get('password')?.errors"
-                    class="text-sm text-red-600 mt-1 space-y-1">
+                    class="text-sm text-red-600 mt-1 stack--space-1">
                     <div *ngIf="form.get('password')?.errors?.['required']">Password is required</div>
                     <div
                         *ngIf="form.get('password')?.errors?.['minlength'] && !form.get('password')?.errors?.['required']">
