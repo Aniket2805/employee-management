@@ -1,13 +1,3 @@
-declare global {
-  interface Window {
-    env: {
-      AUTH_API_URL?: string;
-      HR_API_URL?: string;
-      IT_API_URL?: string;
-    }
-  }
-}
-
 export const environment = {
   production: false,
   authApiUrl: window.env?.AUTH_API_URL ?? 'http://localhost:8080/auth',
