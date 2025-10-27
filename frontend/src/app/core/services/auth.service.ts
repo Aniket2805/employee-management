@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private jwtHelper = new JwtHelperService();
-  private apiUrl = environment.authApiUrl;
+  private AUTH_API_URL = "https://security-service.up.railway.app/auth";
 
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<{ token: string; fullName: string; role: string; employeeId: string }> {
-    return this.http.post<{ data: { token: string; fullName: string } }>(`${this.apiUrl}/login`, {
+    return this.http.post<{ data: { token: string; fullName: string } }>(`${this.AUTH_API_URL}/login`, {
       email,
       password,
     }).pipe(
@@ -38,14 +36,14 @@ export class AuthService {
 
   signup(fullName: string, email: string, password: string, role: string) {
     return this.http.post<{ message: string }>(
-      `${this.apiUrl}/register`,
+      `${this.AUTH_API_URL}/register`,
       { fullName, email, password, role }
     );
   }
 
   // Change Profile Password
   changePassword(payload: { email: string; currentPassword: string; newPassword: string }): Observable<any> {
-    return this.http.put(`${this.apiUrl}/password`, payload);
+    return this.http.put(`${this.AUTH_API_URL}/password`, payload);
   }
 
   getToken(): string | null {
