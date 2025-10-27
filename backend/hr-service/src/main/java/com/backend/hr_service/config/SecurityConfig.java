@@ -21,9 +21,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors(cors -> {}).csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated())
+        .authorizeHttpRequests(request -> request
+            .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+            // Allow Eureka/Actuator to access health/status endpoints so Eureka can check instance health
+            .requestMatchers("/actuator/**").permitAll()
+            .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authForwardingFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
