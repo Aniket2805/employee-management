@@ -83,10 +83,12 @@ button[type="submit"] {
 }
 
 /* Replacements for Tailwind's space-y utilities used in this component */
-.stack--space-1 > * + * {
-    margin-top: 0.25rem; /* Tailwind space-y-1 */
+.stack--space-1>*+* {
+    margin-top: 0.25rem;
+    /* Tailwind space-y-1 */
 }
 
-.stack--space-7 > * + * {
-    margin-top: 1.75rem; /* Tailwind space-y-7 */
+.stack--space-7>*+* {
+    margin-top: 1.75rem;
+    /* Tailwind space-y-7 */
 }

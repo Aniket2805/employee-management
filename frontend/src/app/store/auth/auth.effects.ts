@@ -39,8 +39,7 @@ export class AuthEffects {
                         this.toastr.success('Signup successful');
                         return AuthActions.signupSuccess({ message: res.message })
                     }),
-                    catchError((err) =>
-                    {
+                    catchError((err) => {
                         this.toastr.error(err.error?.message || 'Signup failed');
                         return of(AuthActions.signupFailure({ error: err.error?.message || 'Signup failed' }))
                     }

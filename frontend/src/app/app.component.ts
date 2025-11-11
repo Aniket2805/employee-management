@@ -8,18 +8,18 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FooterComponent } from './shared/footer/footer.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, NavbarComponent, ReactiveFormsModule, FormlyModule, FooterComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    standalone: true,
+    imports: [RouterOutlet, NavbarComponent, ReactiveFormsModule, FormlyModule, FooterComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private store = inject(Store);
+    private store = inject(Store);
 
-  constructor() {
-    this.store.dispatch(initAuthFromStorage());
-  }
+    constructor() {
+        this.store.dispatch(initAuthFromStorage());
+    }
 
-  title = 'frontend';
+    title = 'frontend';
 }

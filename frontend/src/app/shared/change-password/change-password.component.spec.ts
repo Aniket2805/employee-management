@@ -1,3 +1,4 @@
+/// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangePasswordComponent } from './change-password.component';
 import { ReactiveFormsModule } from '@angular/forms';

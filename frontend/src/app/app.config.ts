@@ -9,5 +9,5 @@ import { provideEffects } from '@ngrx/effects';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideStore(), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideRouterStore(), provideEffects(), provideAnimationsAsync()],
+    providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideStore(), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideRouterStore(), provideEffects(), provideAnimationsAsync()],
 };
