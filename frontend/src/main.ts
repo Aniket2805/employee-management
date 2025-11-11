@@ -15,24 +15,24 @@ import { provideToastr } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 
 bootstrapApplication(AppComponent, {
-  providers: [
-    ...appConfig.providers,
-    ReactiveFormsModule,
-    provideAnimations(), // required animations providers
-    provideToastr({
-      timeOut: 10000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      maxOpened: 5,
-      autoDismiss: true,
-      closeButton: true,
+    providers: [
+        ...appConfig.providers,
+        ReactiveFormsModule,
+        provideAnimations(), // required animations providers
+        provideToastr({
+            timeOut: 10000,
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+            maxOpened: 5,
+            autoDismiss: true,
+            closeButton: true,
 
-    }),
-    provideHttpClient(withInterceptors([authInterceptor])),
-    importProvidersFrom(
-      StoreModule.forRoot(appReducer),
-      EffectsModule.forRoot([AuthEffects, EmployeeEffects]),
-      StoreDevtoolsModule.instrument({ maxAge: 25 }))
-  ],
+        }),
+        provideHttpClient(withInterceptors([authInterceptor])),
+        importProvidersFrom(
+            StoreModule.forRoot(appReducer),
+            EffectsModule.forRoot([AuthEffects, EmployeeEffects]),
+            StoreDevtoolsModule.instrument({ maxAge: 25 }))
+    ],
 })
-  .catch((err) => console.error(err));
+    .catch((err) => console.error(err));
