@@ -3,7 +3,7 @@ services:
     name: frontend
     env: static
     staticPublishPath: dist/frontend/browser
-    buildCommand: npm run build
+    buildCommand: npm run build 
     routes:
       - type: rewrite
         source: /*
