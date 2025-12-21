@@ -1,21 +1,42 @@
-// Summary Bar
-.summary-bar {
-    margin-bottom: 2.5rem;
+// Responsive Design
+@media (max-width: 900px) {
+    .dashboard-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1.5rem 1.5rem;
+    }
+
+    .dashboard-hero::before,
+    .dashboard-hero::after {
+        display: none;
+    }
 }
 
-.summary-card {
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 16px 0 rgba(60, 72, 88, 0.10);
-    border-radius: 1.25rem;
-    background: #fff;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-}
+@media (max-width: 600px) {
+    .dashboard-hero {
+        padding: 1.2rem 1rem;
+        border-radius: 1.25rem;
+        margin-bottom: 2rem;
+    }
 
-.summary-card:hover {
-    transform: translateY(-4px) scale(1.025);
-    box-shadow: 0 8px 32px 0 rgba(60, 72, 88, 0.18);
+    .employee-card {
+        padding: 1.2rem 0.9rem;
+        border-radius: 1.25rem;
+    }
+
+    .summary-card {
+        padding: 1.2rem 1rem;
+        border-radius: 1.25rem;
+    }
+
+    .fab-add-employee {
+        width: 56px;
+        height: 56px;
+        font-size: 1.3rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
 }
 
 // Floating Action Button
@@ -23,105 +44,216 @@
     position: fixed;
     bottom: 2.2rem;
     right: 2.2rem;
-    z-index: 60;
+    z-index: 70;
     background: linear-gradient(135deg, #2d5be3 0%, #4f8cff 100%);
     color: #fff;
     border: none;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 4px 24px 0 rgba(60, 72, 88, 0.18);
-    font-size: 2rem;
+    width: 65px;
+    height: 65px;
+    box-shadow: 0 8px 32px 0 rgba(45, 91, 227, 0.4);
+    font-size: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .fab-add-employee:hover {
     background: linear-gradient(135deg, #4f8cff 0%, #2d5be3 100%);
-    box-shadow: 0 8px 32px 0 rgba(60, 72, 88, 0.25);
-    transform: scale(1.08);
+    box-shadow: 0 12px 48px 0 rgba(45, 91, 227, 0.5);
+    transform: scale(1.15) translateY(-4px);
+}
+
+.fab-add-employee:active {
+    transform: scale(0.92);
 }
 
 @media (max-width: 600px) {
     .fab-add-employee {
-        width: 48px;
-        height: 48px;
+        width: 52px;
+        height: 52px;
         font-size: 1.4rem;
-        bottom: 1.1rem;
-        right: 1.1rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
     }
 }
 
 // HR Dashboard Styles
 
 .hr-dashboard-bg {
-    background: #f6f7f9;
+    background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fc 50%, #e8f0ff 100%);
     min-height: 90vh;
     width: 100%;
     font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.hr-dashboard-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(45, 91, 227, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(79, 140, 255, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .dashboard-hero {
-    background: #fff;
-    border-radius: 1.5rem;
-    box-shadow: 0 6px 32px 0 rgba(60, 72, 88, 0.10);
-    padding: 2.2rem 2rem 2rem 2rem;
-    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(45, 91, 227, 0.12);
+    padding: 2.5rem 2.5rem;
+    margin-bottom: 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border: 1.5px solid rgba(45, 91, 227, 0.15);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.dashboard-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(79, 140, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.dashboard-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(45, 91, 227, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
 }
 
 // Summary Cards
 .summary-card {
-    background: #fff;
-    border-radius: 1.25rem;
-    box-shadow: 0 2px 16px 0 rgba(60, 72, 88, 0.08);
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px 0 rgba(45, 91, 227, 0.08);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    border: 1.5px solid #ececec;
+    border: 1.5px solid rgba(45, 91, 227, 0.15);
+    padding: 1.5rem;
+    z-index: 1;
+}
+
+.summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.02) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .summary-card:hover {
-    transform: translateY(-4px) scale(1.025);
-    box-shadow: 0 8px 32px 0 rgba(60, 72, 88, 0.13);
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 40px 0 rgba(45, 91, 227, 0.18);
+    border-color: rgba(45, 91, 227, 0.25);
+}
+
+.summary-card:hover::before {
+    opacity: 1;
 }
 
 .summary-total {
-    border-left: 6px solid #222;
+    border-left: 5px solid #2d5be3;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
 }
 
 .summary-pending {
-    border-left: 6px solid #facc15;
+    border-left: 5px solid #facc15;
+    background: linear-gradient(135deg, #ffffff 0%, #fffbf0 100%);
 }
 
 .summary-completed {
-    border-left: 6px solid #22c55e;
+    border-left: 5px solid #22c55e;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
 }
 
+.summary-offboarded {
+    border-left: 5px solid #ef4444;
+    background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+}
+
+// ✨ New Employee Card Design
 .employee-card {
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 16px 0 rgba(60, 72, 88, 0.10);
-    border-radius: 1.25rem;
-    background: #fff;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 6px 24px 0 rgba(45, 91, 227, 0.1);
+    border-radius: 1.75rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
     position: relative;
     overflow: hidden;
+    border: 1.5px solid rgba(45, 91, 227, 0.15);
+    z-index: 1;
 }
 
 .employee-card:hover {
-    transform: translateY(-6px) scale(1.035);
-    box-shadow: 0 8px 32px 0 rgba(60, 72, 88, 0.18);
+    transform: translateY(-12px) scale(1.025);
+    box-shadow: 0 16px 48px 0 rgba(45, 91, 227, 0.22);
+    border-color: rgba(45, 91, 227, 0.3);
 }
 
-// Animations
+// Glassmorphism overlay effect
+.employee-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2d5be3 0%, #4f8cff 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.employee-card:hover::before {
+    opacity: 1;
+}
+
+// Subtle background animation
+.employee-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(79, 140, 255, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+// ✨ Animations
 @keyframes fade-in {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
 
     to {
@@ -131,13 +263,13 @@
 }
 
 .animate-fade-in {
-    animation: fade-in 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fade-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
 @keyframes pop-in {
     0% {
         opacity: 0;
-        transform: scale(0.95) translateY(20px);
+        transform: scale(0.85) translateY(20px);
     }
 
     100% {
@@ -147,38 +279,50 @@
 }
 
 .animate-pop-in {
-    animation: pop-in 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pop-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
-// Responsive
-@media (max-width: 900px) {
-    .dashboard-hero {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
-        padding: 1.5rem 1rem;
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 16px 0 rgba(45, 91, 227, 0.08);
+    }
+
+    50% {
+        box-shadow: 0 8px 28px 0 rgba(45, 91, 227, 0.15);
     }
 }
 
-@media (max-width: 600px) {
-    .dashboard-hero {
-        padding: 1rem 0.5rem;
-        border-radius: 1rem;
+.animate-glow {
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
     }
 
-    .employee-card {
-        padding: 1.2rem 0.7rem;
-        border-radius: 1rem;
+    50% {
+        transform: translateY(-8px);
     }
 }
 
-/* Replacements for Tailwind's space-y utilities used in this component */
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+
+
+/* Utility Classes for Spacing */
 .stack--space-2>*+* {
     margin-top: 0.5rem;
-    /* Tailwind space-y-2 */
+    /* spacing-y-2 equivalent */
 }
 
 .stack--space-4>*+* {
     margin-top: 1rem;
-    /* Tailwind space-y-4 */
+    /* spacing-y-4 equivalent */
 }

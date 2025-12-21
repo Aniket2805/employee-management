@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM openjdk:26-trixie
+FROM openjdk:27-ea-jdk
 WORKDIR /app
 COPY --from=build /app/target/hr-service.jar .
 

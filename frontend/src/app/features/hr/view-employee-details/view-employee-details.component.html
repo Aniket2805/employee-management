@@ -1,0 +1,166 @@
+<div class="view-employee-bg">
+    <!-- Loading State -->
+    <app-loading *ngIf="loading()" [message]="'Loading employee details...'"></app-loading>
+
+    <!-- Main Content -->
+    <div *ngIf="!loading()" class="view-employee-content">
+        <!-- Main Content Container with consistent padding -->
+        <div *ngIf="selectedEmployee() as employee" class="employee-container">
+            <!-- Profile Card Section -->
+            <div class="profile-card animate-fade-in">
+                <div class="profile-content">
+                    <!-- Employee Image -->
+                    <div class="profile-image-wrapper">
+                        <img [src]="'https://avatar.iran.liara.run/public'"
+                            alt="{{ employee.firstName }} {{ employee.lastName }}" class="profile-image" />
+                    </div>
+
+                    <!-- Header Section -->
+                    <div class="profile-info">
+                        <div class="header-section">
+                            <h1 class="employee-name">
+                                {{ employee.firstName }} {{ employee.lastName }}
+                            </h1>
+                            <p class="employee-id">
+                                Employee ID: <span>#{{ employee.id }}</span>
+                            </p>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="quick-stats">
+                            <div class="stat-item">
+                                <i class="fa-solid fa-envelope" style="color: #3b82f6;"></i>
+                                <span>{{ getEmailDisplay() }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fa-solid fa-building" style="color: #3b82f6;"></i>
+                                <span>{{ employee.department }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Edit Button -->
+                        <button (click)="editEmployee()" class="edit-button">
+                            <i class="fa-solid fa-pencil-alt"></i> Edit Employee
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status and Quick Info Cards -->
+            <div class="info-grid animate-fade-in">
+                <!-- Status Card -->
+                <div class="info-card">
+                    <div class="info-card-icon"
+                        [ngStyle]="{'backgroundColor': getStatusBgColor(employee.onboardingStatus) === 'yellow-100' ? '#fef3c7' : getStatusBgColor(employee.onboardingStatus) === 'blue-100' ? '#dbeafe' : getStatusBgColor(employee.onboardingStatus) === 'green-100' ? '#dcfce7' : '#f3f4f6'}">
+                        <i [class]="'fa-solid ' + getStatusIcon(employee.onboardingStatus)"
+                            [ngStyle]="{'color': getStatusBgColor(employee.onboardingStatus) === 'yellow-100' ? '#78350f' : getStatusBgColor(employee.onboardingStatus) === 'blue-100' ? '#1e40af' : getStatusBgColor(employee.onboardingStatus) === 'green-100' ? '#166534' : '#374151'}"></i>
+                    </div>
+                    <div class="info-card-content">
+                        <p class="info-card-label">Current Status</p>
+                        <p class="info-card-value">{{ employee.onboardingStatus }}</p>
+                    </div>
+                </div>
+
+                <!-- Department Card -->
+                <div class="info-card">
+                    <div class="info-card-icon" style="background-color: #dbeafe;">
+                        <i class="fa-solid fa-building" style="color: #1e40af;"></i>
+                    </div>
+                    <div class="info-card-content">
+                        <p class="info-card-label">Department</p>
+                        <p class="info-card-value">{{ employee.department }}</p>
+                    </div>
+                </div>
+
+                <!-- Mentor Badge Card -->
+                <div class="info-card">
+                    <div class="info-card-icon"
+                        [ngStyle]="{'backgroundColor': employee.isMentor ? '#ede9fe' : '#f3f4f6'}">
+                        <i [class]="employee.isMentor ? 'fa-solid fa-star' : 'fa-solid fa-user'"
+                            [ngStyle]="{'color': employee.isMentor ? '#7c3aed' : '#6b7280'}"></i>
+                    </div>
+                    <div class="info-card-content">
+                        <p class="info-card-label">Mentor Status</p>
+                        <p class="info-card-value">{{ employee.isMentor ? 'Yes' : 'No' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Details Section -->
+            <div class="details-card animate-fade-in">
+                <h2 class="details-title">Employee Information</h2>
+
+                <div class="details-grid">
+                    <!-- Left Column -->
+                    <div class="details-column">
+                        <div class="detail-item">
+                            <label class="detail-label">Email Address</label>
+                            <div class="detail-content">
+                                <i class="fa-solid fa-envelope" style="color: #3b82f6;"></i>
+                                <span [style.fontStyle]="!isEmailAssigned() ? 'italic' : 'normal'"
+                                    [style.color]="!isEmailAssigned() ? '#9ca3af' : '#1f2937'">{{ getEmailDisplay()
+                                    }}</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <label class="detail-label">Department</label>
+                            <div class="detail-content">
+                                <i class="fa-solid fa-building" style="color: #3b82f6;"></i>
+                                <span>{{ employee.department }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="details-column">
+                        <!-- Mentor Section - Only show if employee is NOT a mentor -->
+                        <div class="detail-item" *ngIf="!isEmployeeMentor() && employee.mentor">
+                            <label class="detail-label">Assigned Mentor</label>
+                            <div class="mentor-card">
+                                <i class="fa-solid fa-user-tie" style="color: #3b82f6;"></i>
+                                <div>
+                                    <p class="mentor-name">{{ employee.mentor.firstName }} {{
+                                        employee.mentor.lastName }}</p>
+                                    <p class="mentor-title">Senior Employee</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- No Mentor Section - Only show if employee is NOT a mentor and has no mentor assigned -->
+                        <div class="detail-item" *ngIf="!isEmployeeMentor() && !employee.mentor">
+                            <label class="detail-label">Assigned Mentor</label>
+                            <div class="no-mentor-card">
+                                <i class="fa-solid fa-info-circle" style="color: #eab308;"></i>
+                                <span>No Mentor Assigned Yet</span>
+                            </div>
+                        </div>
+
+                        <!-- Employee is Mentor Section - Show if employee is a mentor -->
+                        <div class="detail-item" *ngIf="isEmployeeMentor()">
+                            <label class="detail-label">Mentor Status</label>
+                            <div class="mentor-badge-card">
+                                <i class="fa-solid fa-star" style="color: #7c3aed;"></i>
+                                <div>
+                                    <p class="mentor-badge-title">This Employee is a Mentor</p>
+                                    <p class="mentor-badge-subtitle">Currently mentoring team members</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Employee Found State -->
+        <div *ngIf="!selectedEmployee() && !loading()" class="no-employee-state">
+            <div class="no-employee-content">
+                <i class="fa-solid fa-user-slash"></i>
+                <p>Employee not found</p>
+                <button (click)="returnToDashboard()" class="return-button">
+                    <i class="fa-solid fa-arrow-left"></i> Return to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

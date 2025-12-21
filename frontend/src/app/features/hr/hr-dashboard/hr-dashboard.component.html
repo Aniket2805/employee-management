@@ -1,205 +1,160 @@
-<div class="hr-dashboard-bg min-h-[90vh] py-6 px-2 sm:px-6 font-[Segoe UI]">
-    <!-- Hero Section with Illustration -->
-    <div class="dashboard-hero mb-8 animate-fade-in">
-        <div class="flex flex-col sm:flex-row items-center gap-4">
-            <div>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-black drop-shadow mb-2 flex items-center gap-3">
-                    <i class="fa-solid fa-briefcase text-yellow-400 animate-bounce"></i>
-                    HR Dashboard
-                </h1>
-                <p class="text-lg text-gray-700 font-medium">
-                    Manage your employees, onboarding, and tasks with ease. Use the quick actions and insights below to
-                    keep your team on track!
-                </p>
-            </div>
-            <div class="">
-                <img src="assets/HR_Banner.jpg" alt="HR Dashboard"
-                    class="rounded-xl object-contain animate-pop-in p-2" />
-            </div>
-        </div>
-    </div>
-
-    <!-- Summary Stats Bar -->
-    <div class="summary-bar grid grid-cols-1 sm:grid-cols-4 gap-6 mb-10 animate-fade-in">
-        <div class="summary-card summary-total flex items-center gap-4 p-5">
-            <i class="fa-solid fa-users text-3xl text-black/80"></i>
-            <div>
-                <div class="text-2xl font-bold text-black">{{ totalEmployees }}</div>
-                <div class="text-sm font-medium text-gray-700">Total Employees</div>
-            </div>
-        </div>
-        <div class="summary-card summary-pending flex items-center gap-4 p-5">
-            <i class="fa-solid fa-hourglass-half text-3xl text-yellow-600"></i>
-            <div>
-                <div class="text-2xl font-bold text-yellow-700">{{ pendingOnboarding }}</div>
-                <div class="text-sm font-medium text-yellow-700">Pending Onboarding</div>
-            </div>
-        </div>
-        <div class="summary-card summary-completed flex items-center gap-4 p-5">
-            <i class="fa-solid fa-circle-check text-3xl text-green-600"></i>
-            <div>
-                <div class="text-2xl font-bold text-green-700">{{ completedOnboarding }}</div>
-                <div class="text-sm font-medium text-green-700">Onboarding Completed</div>
-            </div>
-        </div>
-        <div class="summary-card summary-offboarded flex items-center gap-4 p-5">
-            <i class="fa-solid fa-user-slash text-3xl text-red-600"></i>
-            <div>
-                <div class="text-2xl font-bold text-red-700">{{ offboardedEmployees }}</div>
-                <div class="text-sm font-medium text-red-700">Offboarded Employees</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Employee Cards -->
-    <div *ngIf="employees().data.length; else noEmployees" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div *ngFor="let emp of employees().data"
-            class="employee-card group bg-white/90 shadow-xl rounded-2xl p-7 border border-gray-100 hover:scale-[1.03] hover:shadow-2xl transition-all duration-300 relative overflow-hidden animate-fade-in">
-            <div class="absolute -top-4 -right-4 opacity-10 text-[7rem] pointer-events-none select-none">
-                <i class="fa-solid fa-user-tie"></i>
-            </div>
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-bold text-blue-900 flex items-center gap-2">
-                    <i class="fa-solid fa-user text-blue-400"></i>
-                    {{ emp.firstName }} {{ emp.lastName }}
-                </h3>
-                <span class="text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-gray-200" [ngClass]="{
-                    'bg-yellow-100 text-yellow-800': emp.onboardingStatus === 'PENDING',
-                    'bg-blue-100 text-blue-800': emp.onboardingStatus === 'IN_PROGRESS',
-                    'bg-green-100 text-green-800': emp.onboardingStatus === 'COMPLETED',
-                    'bg-red-100 text-red-800': emp.onboardingStatus === 'OFFBOARDED'
-                }">
-                    <i class="fa-solid fa-circle mr-1" [ngClass]="{
-                        'text-yellow-400': emp.onboardingStatus === 'PENDING',
-                        'text-blue-400': emp.onboardingStatus === 'IN_PROGRESS',
-                        'text-green-400': emp.onboardingStatus === 'COMPLETED',
-                        'text-red-400': emp.onboardingStatus === 'OFFBOARDED'
-                    }"></i>
-                    {{ emp.onboardingStatus }}
-                </span>
-            </div>
-            <div class="stack--space-2 mb-4">
-                <div class="flex items-center gap-2 text-gray-700">
-                    <i class="fa-solid fa-id-badge text-gray-400"></i>
-                    <span class="font-semibold">Employee ID:</span>
-                    <span>{{ emp.id }}</span>
-                </div>
-                <div class="flex items-center gap-2 text-gray-700">
-                    <i class="fa-solid fa-building text-gray-400"></i>
-                    <span class="font-semibold">Department:</span>
-                    <span>{{ emp.department }}</span>
-                </div>
-                <div class="flex items-center gap-2 text-gray-700">
-                    <i class="fa-solid fa-user-tie text-gray-400"></i>
-                    <span class="font-semibold">Mentor:</span>
-                    <span>{{ emp.isMentor ? 'Yes' : 'No' }}</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-2">
-                <button (click)="viewEmployee(emp.id)"
-                    class="w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-eye"></i> View Details
-                </button>
-                <button (click)="editEmployee(emp.id)"
-                    class="w-full bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-pencil-alt"></i> Edit Employee
-                </button>
-                <button (click)="deleteEmployee(emp.id)"
-                    class="w-full bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-trash"></i> Delete Employee
-                </button>
-                <button *ngIf="emp.onboardingStatus === 'COMPLETED'" (click)="offboardEmployee(emp.id)"
-                    class="w-full bg-gradient-to-r from-gray-400 to-gray-600 hover:from-gray-500 hover:to-gray-700 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-user-slash"></i> Offboard Employee
-                </button>
-            </div>
-            <div class="mt-4 stack--space-2">
-                <button *ngIf="emp.onboardingStatus === 'PENDING'" (click)="startOnboarding(emp.id)"
-                    class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-play"></i> Start Onboarding
-                </button>
-                <button *ngIf="emp.onboardingStatus === 'IN_PROGRESS'" (click)="goToEmployeeTasks(emp.id)"
-                    class="w-full bg-gradient-to-r from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 text-amber-950 py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-list-check"></i> Complete Onboarding
-                </button>
-                <button *ngIf="emp.onboardingStatus === 'OFFBOARDED'" disabled
-                    class="w-full bg-gradient-to-r from-gray-400 to-gray-600 text-white py-2 rounded-md text-sm font-bold opacity-70 cursor-not-allowed flex items-center justify-center gap-2 animate-pop-in">
-                    <i class="fa-solid fa-circle-check"></i> Offboarding Completed
-                </button>
-            </div>
-        </div>
-    </div>
-    <ng-template #noEmployees>
-        <div class="text-center text-gray-500 mt-10 animate-fade-in">
-            <i class="fa-solid fa-user-slash text-4xl mb-2 text-gray-400"></i>
-            <p class="text-lg font-semibold">No employees found.</p>
-        </div>
-    </ng-template>
-
-    <!-- Floating Action Button -->
-    <button class="fab-add-employee animate-pop-in cursor-pointer" (click)="addEmployee()" title="Add Employee">
-        <i class="fa-solid fa-plus"></i>
-    </button>
-
-    <!-- View Employee Modal -->
-    <div *ngIf="modelOpen()"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-[#0a1833cc] bg-opacity-70 backdrop-blur-sm">
-        <div class="glass-modal relative rounded-3xl shadow-2xl max-w-lg w-full p-0 overflow-hidden animate-pop-in">
-            <div
-                class="modal-header bg-gradient-to-r from-blue-600 via-blue-400 to-cyan-400 px-8 py-6 flex items-center gap-4">
-                <div class="flex items-center justify-center bg-white/20 rounded-full p-4 w-16 h-16 shadow-lg">
-                    <i class="fa-solid fa-user-tie text-white text-2xl"></i>
-                </div>
+<div>
+    <!-- Show Loading Component when data is loading -->
+    <app-loading *ngIf="loading()" [message]="'Fetching employees...'"></app-loading>
+    <!-- Main HR Dashboard Content -->
+    <div *ngIf="!loading()" class="hr-dashboard-bg min-h-[90vh] py-6 px-2 sm:px-6 font-[Segoe UI]">
+        <!-- Hero Section with Illustration -->
+        <div class="dashboard-hero mb-8 animate-fade-in">
+            <div class="flex flex-col sm:flex-row items-center gap-4">
                 <div>
-                    <h3 class="text-3xl font-extrabold text-white tracking-wide font-[Segoe UI] drop-shadow">Employee
-                        Details</h3>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-black drop-shadow mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-briefcase text-yellow-400 animate-bounce"></i>
+                        HR Dashboard
+                    </h1>
+                    <p class="text-lg text-gray-700 font-medium">
+                        Manage your employees, onboarding, and tasks with ease. Use the quick actions and insights below
+                        to
+                        keep your team on track!
+                    </p>
                 </div>
-                <button
-                    class="absolute top-6 right-8 text-white/80 hover:text-red-400 cursor-pointer text-3xl transition"
-                    (click)="closeModal()">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="px-8 py-7 bg-white/80 backdrop-blur-md">
-                <div class="stack--space-4">
-                    <div class="flex items-center gap-3 text-gray-800 text-lg">
-                        <i class="fa-solid fa-id-badge text-blue-400"></i>
-                        <span class="font-semibold">Employee ID:</span>
-                        <span class="font-bold">{{ selectedEmployee()?.id }}</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-gray-800 text-lg">
-                        <i class="fa-solid fa-building text-blue-400"></i>
-                        <span class="font-semibold">Department:</span>
-                        <span class="font-bold">{{ selectedEmployee()?.department }}</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-gray-800 text-lg">
-                        <i class="fa-solid fa-briefcase text-blue-400"></i>
-                        <span class="font-semibold">Mentor:</span>
-                        <span *ngIf="selectedEmployee()?.mentor===null;else mentor" class="font-bold">
-                            No Mentor Available
-                        </span>
-                        <ng-template #mentor>
-                            <span class="font-bold">{{ selectedEmployee()?.mentor?.firstName + " " +
-                                selectedEmployee()?.mentor?.lastName }}</span>
-                        </ng-template>
-                    </div>
-                    <div class="flex items-center gap-3 text-gray-800 text-lg">
-                        <i class="fa-solid fa-layer-group text-blue-400"></i>
-                        <span class="font-semibold">Email:</span>
-                        <span class="font-bold">{{ selectedEmployee()?.email==null?"Not assigned":
-                            selectedEmployee()?.email}}</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-gray-800 text-lg">
-                        <i class="fa-solid fa-circle text-blue-400"></i>
-                        <span class="font-semibold">Onboarding Status:</span>
-                        <span class="font-bold">{{ selectedEmployee()?.onboardingStatus }}</span>
-                    </div>
+                <div class="">
+                    <img src="assets/HR_Banner.jpg" alt="HR Dashboard"
+                        class="rounded-xl object-contain animate-pop-in p-2" />
                 </div>
-                <button (click)="goToEmployeeTasks(selectedEmployee()?.id)"
-                    class="mt-8 w-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white px-6 py-3 rounded-xl transition duration-200 cursor-pointer flex items-center justify-center gap-3 text-lg font-extrabold shadow animate-pop-in tracking-wide">
-                    <i class="fa-solid fa-list-check"></i> View Tasks
-                </button>
             </div>
         </div>
+        <!-- Summary Stats Bar -->
+        <div class="summary-bar grid grid-cols-1 sm:grid-cols-4 gap-6 mb-10 animate-fade-in">
+            <div class="summary-card summary-total flex items-center gap-4 p-5">
+                <i class="fa-solid fa-users text-3xl text-black/80"></i>
+                <div>
+                    <div class="text-2xl font-bold text-black">{{ totalEmployees }}</div>
+                    <div class="text-sm font-medium text-gray-700">Total Employees</div>
+                </div>
+            </div>
+            <div class="summary-card summary-pending flex items-center gap-4 p-5">
+                <i class="fa-solid fa-hourglass-half text-3xl text-yellow-600"></i>
+                <div>
+                    <div class="text-2xl font-bold text-yellow-700">{{ pendingOnboarding }}</div>
+                    <div class="text-sm font-medium text-yellow-700">Pending Onboarding</div>
+                </div>
+            </div>
+            <div class="summary-card summary-completed flex items-center gap-4 p-5">
+                <i class="fa-solid fa-circle-check text-3xl text-green-600"></i>
+                <div>
+                    <div class="text-2xl font-bold text-green-700">{{ completedOnboarding }}</div>
+                    <div class="text-sm font-medium text-green-700">Onboarding Completed</div>
+                </div>
+            </div>
+            <div class="summary-card summary-offboarded flex items-center gap-4 p-5">
+                <i class="fa-solid fa-user-slash text-3xl text-red-600"></i>
+                <div>
+                    <div class="text-2xl font-bold text-red-700">{{ offboardedEmployees }}</div>
+                    <div class="text-sm font-medium text-red-700">Offboarded Employees</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Cards -->
+        <div *ngIf="employees().data.length; else noEmployees"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div *ngFor="let emp of employees().data"
+                class="employee-card group bg-white/90 shadow-xl rounded-2xl p-7 border border-gray-100 hover:scale-[1.03] hover:shadow-2xl transition-all duration-300 relative overflow-hidden animate-fade-in">
+                <div class="absolute -top-4 -right-4 opacity-10 text-[7rem] pointer-events-none select-none">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-blue-900 flex items-center gap-2">
+                        <i class="fa-solid fa-user text-blue-400"></i>
+                        {{ emp.firstName }} {{ emp.lastName }}
+                    </h3>
+                    <span class="text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-gray-200" [ngClass]="{
+                            'bg-yellow-100 text-yellow-800': emp.onboardingStatus === 'PENDING',
+                            'bg-blue-100 text-blue-800': emp.onboardingStatus === 'IN_PROGRESS',
+                            'bg-green-100 text-green-800': emp.onboardingStatus === 'COMPLETED',
+                            'bg-red-100 text-red-800': emp.onboardingStatus === 'OFFBOARDED'
+                        }">
+                        <i class="fa-solid fa-circle mr-1" [ngClass]="{
+                                'text-yellow-400': emp.onboardingStatus === 'PENDING',
+                                'text-blue-400': emp.onboardingStatus === 'IN_PROGRESS',
+                                'text-green-400': emp.onboardingStatus === 'COMPLETED',
+                                'text-red-400': emp.onboardingStatus === 'OFFBOARDED'
+                            }"></i>
+                        {{ emp.onboardingStatus }}
+                    </span>
+                </div>
+                <div class="stack--space-2 mb-4">
+                    <div class="flex items-center gap-2 text-gray-700">
+                        <i class="fa-solid fa-id-badge text-gray-400"></i>
+                        <span class="font-semibold">Employee ID:</span>
+                        <span>{{ emp.id }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-700">
+                        <i class="fa-solid fa-building text-gray-400"></i>
+                        <span class="font-semibold">Department:</span>
+                        <span>{{ emp.department }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-700">
+                        <i class="fa-solid fa-user-tie text-gray-400"></i>
+                        <span class="font-semibold">Mentor:</span>
+                        <span>{{ emp.isMentor ? 'Yes' : 'No' }}</span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <button (click)="viewEmployee(emp.id)"
+                        [disabled]="getOperationLoading(emp.id)().delete || getOperationLoading(emp.id)().offboard || getOperationLoading(emp.id)().startOnboarding"
+                        class="w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-400 disabled:to-gray-500">
+                        <i class="fa-solid fa-eye"></i> View Details
+                    </button>
+                    <button (click)="editEmployee(emp.id)"
+                        [disabled]="getOperationLoading(emp.id)().delete || getOperationLoading(emp.id)().offboard || getOperationLoading(emp.id)().startOnboarding"
+                        class="w-full bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-400 disabled:to-gray-500">
+                        <i class="fa-solid fa-pencil-alt"></i> Edit Employee
+                    </button>
+                    <button (click)="deleteEmployee(emp.id)" [disabled]="getOperationLoading(emp.id)().delete"
+                        class="w-full bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-400 disabled:to-gray-500">
+                        <i
+                            [class]="getOperationLoading(emp.id)().delete ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-trash'"></i>
+                        {{ getOperationLoading(emp.id)().delete ? 'Deleting...' : 'Delete Employee' }}
+                    </button>
+                    <button *ngIf="emp.onboardingStatus === 'COMPLETED'" (click)="offboardEmployee(emp.id)"
+                        [disabled]="getOperationLoading(emp.id)().offboard"
+                        class="w-full bg-gradient-to-r from-gray-400 to-gray-600 hover:from-gray-500 hover:to-gray-700 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-400 disabled:to-gray-500">
+                        <i
+                            [class]="getOperationLoading(emp.id)().offboard ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-user-slash'"></i>
+                        {{ getOperationLoading(emp.id)().offboard ? 'Offboarding...' : 'Offboard Employee' }}
+                    </button>
+                </div>
+                <div class="mt-4 stack--space-2">
+                    <button *ngIf="emp.onboardingStatus === 'PENDING'" (click)="startOnboarding(emp.id)"
+                        [disabled]="getOperationLoading(emp.id)().startOnboarding"
+                        class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-white py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-400 disabled:to-gray-500">
+                        <i
+                            [class]="getOperationLoading(emp.id)().startOnboarding ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-play'"></i>
+                        {{ getOperationLoading(emp.id)().startOnboarding ? 'Starting...' : 'Start Onboarding' }}
+                    </button>
+                    <button *ngIf="emp.onboardingStatus === 'IN_PROGRESS'" (click)="goToEmployeeTasks(emp.id)"
+                        [disabled]="getOperationLoading(emp.id)().delete || getOperationLoading(emp.id)().offboard || getOperationLoading(emp.id)().startOnboarding"
+                        class="w-full bg-gradient-to-r from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 text-amber-950 py-2 rounded-md text-sm font-bold shadow transition duration-200 cursor-pointer flex items-center justify-center gap-2 animate-pop-in disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-400 disabled:to-gray-500">
+                        <i class="fa-solid fa-list-check"></i> Complete Onboarding
+                    </button>
+                    <button *ngIf="emp.onboardingStatus === 'OFFBOARDED'" disabled
+                        class="w-full bg-gradient-to-r from-gray-400 to-gray-600 text-white py-2 rounded-md text-sm font-bold opacity-70 cursor-not-allowed flex items-center justify-center gap-2 animate-pop-in">
+                        <i class="fa-solid fa-circle-check"></i> Offboarding Completed
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ng-template #noEmployees>
+            <div class="text-center text-gray-500 mt-10 animate-fade-in">
+                <i class="fa-solid fa-user-slash text-4xl mb-2 text-gray-400"></i>
+                <p class="text-lg font-semibold">No employees found.</p>
+            </div>
+        </ng-template>
+
+        <!-- Floating Action Button -->
+        <button class="fab-add-employee animate-pop-in cursor-pointer" (click)="addEmployee()" title="Add Employee">
+            <i class="fa-solid fa-plus"></i>
+        </button>
     </div>
 </div>

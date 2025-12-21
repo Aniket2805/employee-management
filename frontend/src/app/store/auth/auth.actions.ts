@@ -19,4 +19,6 @@ export const signupFailure = createAction(
     props<{ error: string }>()
 );
 export const initAuthFromStorage = createAction('[Auth] Init From Storage');
+export const autoLogout = createAction('[Auth] Auto Logout', props<{ reason: string }>());
+export const checkTokenValidity = createAction('[Auth] Check Token Validity');
 

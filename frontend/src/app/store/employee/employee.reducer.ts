@@ -19,9 +19,22 @@ export const employeeReducer = createReducer(
     })),
 
     // Set Selected Employee
+    on(EmployeeActions.setSelectedEmployee, (state) => ({
+        ...state,
+        selectedEmployeeLoading: true,
+        selectedEmployeeError: null
+    })),
     on(EmployeeActions.setSelectedEmployeeSuccess, (state, { employee }) => ({
         ...state,
-        selectedEmployee: employee
+        selectedEmployee: employee,
+        selectedEmployeeLoading: false,
+        selectedEmployeeError: null
+    })),
+    on(EmployeeActions.setSelectedEmployeeFailure, (state, { error }) => ({
+        ...state,
+        selectedEmployee: null,
+        selectedEmployeeLoading: false,
+        selectedEmployeeError: error
     })),
 
     // Load Tasks for Employee
@@ -39,15 +52,28 @@ export const employeeReducer = createReducer(
     })),
 
     // Add New Employee
+    on(EmployeeActions.addEmployee, (state) => ({
+        ...state,
+        addLoading: true
+    })),
     on(EmployeeActions.addEmployeeSuccess, (state, { employee }) => ({
         ...state,
         employees: {
             ...state.employees,
             data: [...state.employees.data, employee],
         },
+        addLoading: false
+    })),
+    on(EmployeeActions.addEmployeeFailure, (state) => ({
+        ...state,
+        addLoading: false
     })),
 
     // Update Employee
+    on(EmployeeActions.updateEmployee, (state) => ({
+        ...state,
+        updateLoading: true
+    })),
     on(EmployeeActions.updateEmployeeSuccess, (state, { employee }) => ({
         ...state,
         employees: {
@@ -56,6 +82,11 @@ export const employeeReducer = createReducer(
                 emp.id === employee.id ? { ...emp, ...employee } : emp
             ),
         },
+        updateLoading: false
+    })),
+    on(EmployeeActions.updateEmployeeFailure, (state) => ({
+        ...state,
+        updateLoading: false
     })),
 
 
@@ -107,12 +138,30 @@ export const employeeReducer = createReducer(
     })),
 
     // Delete Employee
+    on(EmployeeActions.deleteEmployee, (state, { id }) => ({
+        ...state,
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], delete: true }
+        }
+    })),
     on(EmployeeActions.deleteEmployeeSuccess, (state, { id }) => ({
         ...state,
         employees: {
             ...state.employees,
             data: state.employees.data.filter((emp) => emp.id !== id),
         },
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], delete: false }
+        }
+    })),
+    on(EmployeeActions.deleteEmployeeFailure, (state, { id }) => ({
+        ...state,
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], delete: false }
+        }
     })),
 
     // Audit Logs
@@ -130,6 +179,13 @@ export const employeeReducer = createReducer(
     })),
 
     // Offboarding
+    on(EmployeeActions.offboardEmployee, (state, { id }) => ({
+        ...state,
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], offboard: true }
+        }
+    })),
     on(EmployeeActions.offboardEmployeeSuccess, (state, { id }) => ({
         ...state,
         employees: {
@@ -138,6 +194,46 @@ export const employeeReducer = createReducer(
                 emp.id === id ? { ...emp, onboardingStatus: 'OFFBOARDED' as const } : emp
             ),
         },
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], offboard: false }
+        }
+    })),
+    on(EmployeeActions.offboardEmployeeFailure, (state, { id }) => ({
+        ...state,
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], offboard: false }
+        }
+    })),
+
+    // Start Onboarding
+    on(EmployeeActions.startOnboarding, (state, { id }) => ({
+        ...state,
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], startOnboarding: true }
+        }
+    })),
+    on(EmployeeActions.startOnboardingSuccess, (state, { id }) => ({
+        ...state,
+        employees: {
+            ...state.employees,
+            data: state.employees.data.map(emp =>
+                emp.id === id ? { ...emp, onboardingStatus: 'IN_PROGRESS' as const } : emp
+            ),
+        },
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], startOnboarding: false }
+        }
+    })),
+    on(EmployeeActions.startOnboardingFailure, (state, { id }) => ({
+        ...state,
+        operationLoading: {
+            ...state.operationLoading,
+            [id]: { ...state.operationLoading[id], startOnboarding: false }
+        }
     })),
 
 );

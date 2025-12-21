@@ -55,5 +55,7 @@ export const authReducer = createReducer(
 
         return state;
     }),
-    on(AuthActions.logout, () => initialAuthState)
+    on(AuthActions.logout, () => initialAuthState),
+    on(AuthActions.autoLogout, () => initialAuthState),
+    on(AuthActions.checkTokenValidity, (state) => state)
 );

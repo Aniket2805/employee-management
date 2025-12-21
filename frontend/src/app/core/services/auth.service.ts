@@ -11,6 +11,114 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
+    isTokenPresent(): boolean {
+        const token = localStorage.getItem('token');
+        return !!token;
+    }
+
+    /**
+     * Check if token is expired
+     * @param token - JWT token to check
+     * @returns true if token is expired, false otherwise
+     */
+    isTokenExpired(token?: string): boolean {
+        try {
+            const tokenToCheck = token || localStorage.getItem('token');
+            if (!tokenToCheck) {
+                return true;
+            }
+            return this.jwtHelper.isTokenExpired(tokenToCheck);
+        } catch (error) {
+            console.error('Error checking token expiration:', error);
+            return true;
+        }
+    }
+
+    /**
+     * Check if token is invalid (can't be decoded)
+     * @param token - JWT token to check
+     * @returns true if token is invalid, false otherwise
+     */
+    isTokenInvalid(token?: string): boolean {
+        try {
+            const tokenToCheck = token || localStorage.getItem('token');
+            if (!tokenToCheck) {
+                return true;
+            }
+            const decoded = this.jwtHelper.decodeToken(tokenToCheck);
+            return !decoded;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return true;
+        }
+    }
+
+    /**
+     * Comprehensive check if token is valid (exists, not expired, and decodable)
+     * @param token - JWT token to check (optional, will use localStorage if not provided)
+     * @returns true if token is valid, false otherwise
+     */
+    isTokenValid(token?: string): boolean {
+        const tokenToCheck = token || localStorage.getItem('token');
+        if (!tokenToCheck) {
+            return false;
+        }
+        return !this.isTokenExpired(tokenToCheck) && !this.isTokenInvalid(tokenToCheck);
+    }
+
+    /**
+     * Get remaining time until token expires (in milliseconds)
+     * @param token - JWT token to check
+     * @returns remaining time in milliseconds, or 0 if token is already expired
+     */
+    getTokenExpirationTime(token?: string): number {
+        try {
+            const tokenToCheck = token || localStorage.getItem('token');
+            if (!tokenToCheck) {
+                return 0;
+            }
+            const expirationDate = this.jwtHelper.getTokenExpirationDate(tokenToCheck);
+            if (!expirationDate) {
+                return 0;
+            }
+            const now = new Date().getTime();
+            const expiration = expirationDate.getTime();
+            const remaining = expiration - now;
+            return remaining > 0 ? remaining : 0;
+        } catch (error) {
+            console.error('Error getting token expiration time:', error);
+            return 0;
+        }
+    }
+
+    /**
+     * Decode token to get payload
+     * @param token - JWT token to decode
+     * @returns decoded token payload or null
+     */
+    decodeToken(token?: string): any {
+        try {
+            const tokenToCheck = token || localStorage.getItem('token');
+            if (!tokenToCheck) {
+                return null;
+            }
+            return this.jwtHelper.decodeToken(tokenToCheck);
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Clear all authentication data from localStorage
+     */
+    clearAuthData(): void {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('fullName');
+        localStorage.removeItem('employeeId');
+    }
+
     login(
         email: string,
         password: string
@@ -87,6 +195,30 @@ export class AuthService {
             return decoded?.role?.toUpperCase() || null;
         }
         return null;
+    }
+
+    /**
+     * Get total session duration from token (exp - iat in milliseconds)
+     * @param token - JWT token to check
+     * @returns total session duration in milliseconds, or 0 if unable to determine
+     */
+    getTokenSessionDuration(token?: string): number {
+        try {
+            const tokenToCheck = token || localStorage.getItem('token');
+            if (!tokenToCheck) {
+                return 0;
+            }
+            const decoded = this.jwtHelper.decodeToken(tokenToCheck);
+            if (!decoded || !decoded.exp || !decoded.iat) {
+                return 0;
+            }
+            // exp and iat are in seconds, convert to milliseconds
+            const totalDuration = (decoded.exp - decoded.iat) * 1000;
+            return totalDuration > 0 ? totalDuration : 0;
+        } catch (error) {
+            console.error('Error getting token session duration:', error);
+            return 0;
+        }
     }
 
     logout() {

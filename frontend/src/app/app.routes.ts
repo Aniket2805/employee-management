@@ -29,6 +29,13 @@ export const routes: Routes = [
             import('./features/hr/hr-dashboard/hr-dashboard.component').then((m) => m.HrDashboardComponent),
     },
     {
+        path: 'hr/profile',
+        canActivate: [authGuard('HR')],
+        data: { roles: ['HR'] },
+        loadComponent: () =>
+            import('./features/hr/hr-profile/hr-profile.component').then((m) => m.HrProfileComponent),
+    },
+    {
         path: 'hr/employees/add',
         canActivate: [authGuard('HR')],
         loadComponent: () =>
@@ -42,6 +49,14 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./features/hr/add-employee/add-employee.component').then(
                 m => m.AddEmployeeComponent
+            )
+    },
+    {
+        path: 'hr/view-employee-details/:id',
+        canActivate: [authGuard('HR')],
+        loadComponent: () =>
+            import('./features/hr/view-employee-details/view-employee-details.component').then(
+                m => m.ViewEmployeeDetailsComponent
             )
     },
     {

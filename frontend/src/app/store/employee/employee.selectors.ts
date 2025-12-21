@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { EmployeeState } from './employee.state';
+import { state } from '@angular/animations';
 
 export const selectEmployeeState = createFeatureSelector<EmployeeState>('employee');
 
@@ -13,10 +14,30 @@ export const selectSelectedEmployee = createSelector(
     (state) => state.selectedEmployee
 );
 
+export const selectSelectedEmployeeLoading = createSelector(
+    selectEmployeeState,
+    (state) => state.selectedEmployeeLoading
+);
+
+export const selectSelectedEmployeeError = createSelector(
+    selectEmployeeState,
+    (state) => state.selectedEmployeeError
+);
+
 export const selectEmployeeTasks = createSelector(
     selectEmployeeState,
     (state) => state.tasks
 );
+
+export const selectEmployeeTasksLoading = createSelector(
+    selectEmployeeState,
+    (state) => state.tasks.loading
+)
+
+export const selectEmployeeTasksError = createSelector(
+    selectEmployeeState,
+    (state) => state.tasks.error
+)
 
 export const selectEmployeesData = createSelector(
     selectEmployeeState,
@@ -79,4 +100,37 @@ export const selectAuditLogsLoading = createSelector(
 export const selectAuditLogsError = createSelector(
     selectEmployeeState,
     (state) => state.auditLogs.error
+);
+
+// Add and Update Employee Loading Selectors
+export const selectAddLoading = createSelector(
+    selectEmployeeState,
+    (state) => state.addLoading
+);
+
+export const selectUpdateLoading = createSelector(
+    selectEmployeeState,
+    (state) => state.updateLoading
+);
+
+export const selectAddOrUpdateLoading = createSelector(
+    selectAddLoading,
+    selectUpdateLoading,
+    (addLoading, updateLoading) => addLoading || updateLoading
+);
+
+// Operation Loading Selectors
+export const selectOperationLoading = createSelector(
+    selectEmployeeState,
+    (state) => state.operationLoading
+);
+
+export const selectEmployeeOperationLoading = (employeeId: number) => createSelector(
+    selectOperationLoading,
+    (operationLoading) => operationLoading[employeeId] || { delete: false, offboard: false, startOnboarding: false }
+);
+
+export const selectEmployeeIsLoading = (employeeId: number) => createSelector(
+    selectEmployeeOperationLoading(employeeId),
+    (operations) => operations.delete || operations.offboard || operations.startOnboarding
 );

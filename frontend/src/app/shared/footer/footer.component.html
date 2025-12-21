@@ -1,22 +1,62 @@
-<footer
-    class="w-full glass-footer bg-gradient-to-r from-blue-700 to-cyan-400 text-white py-0 shadow-inner animate-fade-in font-['Segoe_UI','Arial',sans-serif]">
-    <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 gap-4">
-        <div class="flex items-center gap-3 animate-pop-in">
-            <a routerLink="/"><span
-                    class="font-extrabold text-2xl tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow">StaffSync</span></a>
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Brand Section -->
+        <div class="footer-brand-section">
+            <a routerLink="/" class="footer-brand-logo">
+                <i class="fa-solid fa-briefcase"></i>
+                <span class="footer-brand-text">StaffSync</span>
+            </a>
+            <p class="footer-tagline">Employee Management Excellence</p>
         </div>
-        <div class="hidden sm:block h-10 border-l-2 border-white/20 mx-6"></div>
-        <div class="text-sm text-blue-100 flex flex-col sm:flex-row gap-2 sm:gap-6 items-center animate-fade-in">
-            <span>&copy; {{ currentYear }} All rights reserved.</span>
-            <span class="hidden sm:inline">|</span>
-            <a href="https://github.com/your-org" target="_blank"
-                class="footer-link hover:underline flex items-center gap-2 transition-colors">
-                <i class="fa-brands fa-github"></i> <span>GitHub</span>
-            </a>
-            <a href="mailto:support@company.com"
-                class="footer-link hover:underline flex items-center gap-2 transition-colors">
-                <i class="fa-solid fa-envelope"></i> <span>Contact</span>
-            </a>
+
+        <!-- Divider -->
+        <div class="footer-divider"></div>
+
+        <!-- Content Section -->
+        <div class="footer-content">
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h4 class="footer-column-title">
+                    <i class="fa-solid fa-link"></i> Quick Links
+                </h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com" target="_blank" class="footer-link">
+                            <i class="fa-brands fa-github"></i> GitHub
+                        </a></li>
+                    <li *ngIf="!token()"><a routerLink="/login" class="footer-link">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+                        </a></li>
+                </ul>
+            </div>
+
+            <!-- Support Section -->
+            <div class="footer-column">
+                <h4 class="footer-column-title">
+                    <i class="fa-solid fa-headset"></i> Support
+                </h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:support&#64;staffsync.com" class="footer-link">
+                            <i class="fa-solid fa-envelope"></i> support&#64;staffsync.com
+                        </a></li>
+                </ul>
+            </div>
+
+            <!-- Info Section -->
+            <div class="footer-column">
+                <h4 class="footer-column-title">
+                    <i class="fa-solid fa-info"></i> Info
+                </h4>
+                <ul class="footer-links">
+                    <li>
+                        <p class="footer-info">&copy; {{ currentYear }} StaffSync. All rights reserved.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+            <p class="footer-copyright">Designed & Built with <i class="fa-solid fa-heart"></i> for Excellence</p>
         </div>
     </div>
 </footer>

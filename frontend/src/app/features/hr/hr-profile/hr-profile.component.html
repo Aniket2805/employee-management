@@ -1,0 +1,167 @@
+<div class="hr-profile-bg">
+    <!-- Loading State -->
+    <app-loading *ngIf="loading()" [message]="'Loading profile...'"></app-loading>
+
+    <!-- Main Content -->
+    <div *ngIf="!loading()" class="hr-profile-content">
+        <div class="profile-container">
+            <!-- Header with Profile Card -->
+            <div class="profile-header animate-fade-in">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <!-- Profile Avatar -->
+                    <div class="profile-avatar-wrapper">
+                        <img [src]="'https://avatar.iran.liara.run/public'"
+                            [alt]="(hrProfile()?.firstName || '') + ' ' + (hrProfile()?.lastName || '')"
+                            class="profile-avatar" />
+                        <div class="admin-badge">
+                            <i class="fa-solid fa-shield"></i> Admin
+                        </div>
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div class="profile-info">
+                        <h1 class="profile-name">{{ hrProfile()?.firstName }} {{ hrProfile()?.lastName }}</h1>
+                        <p class="profile-role">HR Administrator</p>
+                        <p class="profile-department">{{ hrProfile()?.department }}</p>
+                        <p class="profile-email">{{ hrProfile()?.email || 'Not assigned' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats Grid -->
+            <div class="stats-grid animate-fade-in">
+                <!-- Session Status Card -->
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #dbeafe;">
+                        <i class="fa-solid fa-clock" style="color: #1e40af;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Session Time Left</p>
+                        <p class="stat-value">{{ sessionTimeLeft() }}</p>
+                        <div class="session-progress">
+                            <div class="progress-bar" [style.width.%]="sessionPercentage()"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Card -->
+                <div class="stat-card">
+                    <div class="stat-icon" [style.backgroundColor]="'rgba(45, 91, 227, 0.1)'">
+                        <i class="fa-solid fa-user-check" style="color: #2d5be3;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Status</p>
+                        <p class="stat-value">{{ hrProfile()?.onboardingStatus }}</p>
+                    </div>
+                </div>
+
+                <!-- Employee ID Card -->
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #fef3c7;">
+                        <i class="fa-solid fa-id-card" style="color: #78350f;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Employee ID</p>
+                        <p class="stat-value">#{{ hrProfile()?.id }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Settings Section -->
+            <div class="settings-section animate-fade-in">
+                <h2 class="section-title">Account Settings</h2>
+
+                <div class="settings-grid">
+                    <!-- Profile Information Card -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-user"></i>
+                            <h3>Profile Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <span class="info-label">Full Name:</span>
+                                <span class="info-value">{{ hrProfile()?.firstName }} {{ hrProfile()?.lastName }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">{{ hrProfile()?.email || 'Not assigned' }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Department:</span>
+                                <span class="info-value">{{ hrProfile()?.department }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Role:</span>
+                                <span class="info-value">{{ hrRole() || 'Administrator' }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Card -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-lock"></i>
+                            <h3>Security</h3>
+                        </div>
+                        <div class="card-content">
+                            <button (click)="navigateToChangePassword()" class="btn-secondary">
+                                <i class="fa-solid fa-key"></i> Change Password
+                            </button>
+                            <p class="security-note">
+                                <i class="fa-solid fa-info-circle"></i>
+                                Keep your password secure and change it regularly
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Session Information Card -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-hourglass"></i>
+                            <h3>Session Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <span class="info-label">Session Status:</span>
+                                <span class="info-value" style="color: #22c55e;">Active</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Time Remaining:</span>
+                                <span class="info-value">{{ sessionTimeLeft() }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Last Activity:</span>
+                                <span class="info-value">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Actions Card -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-cog"></i>
+                            <h3>Account Actions</h3>
+                        </div>
+                        <div class="card-content action-buttons">
+                            <button class="btn-tertiary">
+                                <i class="fa-solid fa-bell"></i> Notifications
+                            </button>
+                            <button class="btn-tertiary">
+                                <i class="fa-solid fa-eye"></i> Preferences
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logout Button -->
+            <div class="logout-section animate-fade-in">
+                <button (click)="logout()" class="btn-logout">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

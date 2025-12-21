@@ -5,11 +5,12 @@ import { Store } from '@ngrx/store';
 import { Router, RouterModule } from '@angular/router';
 import { login } from '../../../store/auth/auth.actions';
 import { selectLoginError, selectLoginLoading, selectLoginToken, selectRole } from '../../../store/auth/auth.selectors';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule, LoadingComponent],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
 })

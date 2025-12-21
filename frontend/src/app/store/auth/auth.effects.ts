@@ -63,4 +63,65 @@ export class AuthEffects {
         { dispatch: false } // 🔒 This effect doesn't dispatch another action
     );
 
+    /**
+     * Handle automatic logout when token is expired or invalid.
+     * This effect is triggered by the autoLogout action and performs cleanup.
+     */
+    autoLogout$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.autoLogout),
+                tap(({ reason }) => {
+                    if (reason.includes('expired')) {
+                        this.toastr.warning('Your session has expired. Please login again.');
+                    } else if (reason.includes('invalid')) {
+                        this.toastr.warning('Your session is invalid. Please login again.');
+                    } else if (reason.includes('401')) {
+                        this.toastr.warning('Your session has been terminated. Please login again.');
+                    } else {
+                        this.toastr.warning('Session terminated: ' + reason);
+                    }
+                }),
+                tap(() => {
+                    // Clear local storage
+                    this.authService.logout();
+                }),
+                tap(() => {
+                    // Navigate to login page
+                    this.router.navigate(['/login']);
+                })
+            ),
+        { dispatch: false }
+    );
+
+    /**
+     * Check token validity periodically or on demand.
+     * This can be called from components to validate the current token.
+     * Only validates if a token is actually present.
+     */
+    checkTokenValidity$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.checkTokenValidity),
+            map(() => {
+                // Skip validation if no token exists
+                if (!this.authService.isTokenPresent()) {
+                    return { type: '[Auth] No Token Present' } as any;
+                }
+
+                // Token exists, check if it's valid
+                const isValid = this.authService.isTokenValid();
+                if (!isValid) {
+                    this.toastr.warning('Token is invalid, triggering auto logout');
+                    return AuthActions.autoLogout({ reason: 'Token validation check failed' });
+                }
+
+                return { type: '[Auth] Token Valid' } as any;
+            }),
+            catchError((err) => {
+                console.error('Error checking token validity:', err);
+                return of(AuthActions.autoLogout({ reason: 'Error validating token' }));
+            })
+        )
+    );
+
 }

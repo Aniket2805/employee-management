@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { addEmployee, loadEmployees, updateEmployee } from '../../../store/employee/employee.actions';
-import { selectEmployeeById } from '../../../store/employee/employee.selectors';
+import { selectEmployeeById, selectAddOrUpdateLoading } from '../../../store/employee/employee.selectors';
 @Component({
     standalone: true,
     selector: 'app-add-employee',
@@ -19,7 +19,6 @@ import { selectEmployeeById } from '../../../store/employee/employee.selectors';
 export class AddEmployeeComponent implements OnInit {
     private fb = inject(FormBuilder);
     private store = inject(Store);
-    private router = inject(Router);
     private route = inject(ActivatedRoute);
 
     form = this.fb.group({
@@ -31,6 +30,7 @@ export class AddEmployeeComponent implements OnInit {
 
     employeeId: number | null = null;
     isEditMode = false;
+    loading = this.store.selectSignal(selectAddOrUpdateLoading);
 
     ngOnInit(): void {
         const idParam = this.route.snapshot.paramMap.get('id');

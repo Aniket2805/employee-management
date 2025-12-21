@@ -91,7 +91,7 @@ export const deleteEmployeeSuccess = createAction(
 );
 export const deleteEmployeeFailure = createAction(
     '[Employee] Delete Employee Failure',
-    props<{ error: string }>()
+    props<{ id: number; error: string }>()
 );
 
 // Document Metadata Actions
@@ -143,5 +143,19 @@ export const offboardEmployeeSuccess = createAction(
 );
 export const offboardEmployeeFailure = createAction(
     '[Employee] Offboard Employee Failure',
-    props<{ error: string }>()
+    props<{ id: number; error: string }>()
+);
+
+// Start Onboarding
+export const startOnboarding = createAction(
+    '[Employee] Start Onboarding',
+    props<{ id: number }>()
+);
+export const startOnboardingSuccess = createAction(
+    '[Employee] Start Onboarding Success',
+    props<{ id: number }>()
+);
+export const startOnboardingFailure = createAction(
+    '[Employee] Start Onboarding Failure',
+    props<{ id: number; error: string }>()
 );

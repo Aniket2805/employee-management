@@ -123,7 +123,7 @@ export class EmployeeEffects {
                     }),
                     catchError((error) => {
                         this.toastr.error('Failed to delete employee');
-                        return of(EmployeeActions.deleteEmployeeFailure({ error: error.message }))
+                        return of(EmployeeActions.deleteEmployeeFailure({ id, error: error.message }))
                     }
                     )
                 )
@@ -256,7 +256,26 @@ export class EmployeeEffects {
                     }),
                     catchError((error) => {
                         this.toastr.error('Failed to offboard employee');
-                        return of(EmployeeActions.offboardEmployeeFailure({ error: error?.message || 'Failed to offboard employee' }));
+                        return of(EmployeeActions.offboardEmployeeFailure({ id, error: error?.message || 'Failed to offboard employee' }));
+                    })
+                )
+            )
+        )
+    );
+
+    // ✅ Start Onboarding Effect
+    startOnboarding$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(EmployeeActions.startOnboarding),
+            mergeMap(({ id }) =>
+                this.employeeService.startOnboarding(id).pipe(
+                    map(() => {
+                        this.toastr.success('Onboarding started successfully');
+                        return EmployeeActions.startOnboardingSuccess({ id });
+                    }),
+                    catchError((error) => {
+                        this.toastr.error('Failed to start onboarding');
+                        return of(EmployeeActions.startOnboardingFailure({ id, error: error?.message || 'Failed to start onboarding' }));
                     })
                 )
             )

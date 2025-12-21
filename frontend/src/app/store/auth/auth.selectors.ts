@@ -13,6 +13,16 @@ export const selectRole = createSelector(
     (state) => state.login.role
 );
 
+export const selectEmployeeId = createSelector(
+    selectAuthState,
+    (state) => state.login.employeeId
+);
+
+export const selectFullName = createSelector(
+    selectAuthState,
+    (state) => state.login.fullName
+);
+
 export const selectLoginLoading = createSelector(
     selectAuthState,
     (state) => state.login.loading

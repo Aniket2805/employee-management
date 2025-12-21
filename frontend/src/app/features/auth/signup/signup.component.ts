@@ -3,13 +3,14 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Router, RouterModule } from '@angular/router';
-import { selectSignupError, selectSignupSuccess } from '../../../store/auth/auth.selectors';
+import { selectSignupError, selectSignupLoading, selectSignupSuccess } from '../../../store/auth/auth.selectors';
 import { signup } from '../../../store/auth/auth.actions';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 
 @Component({
     selector: 'app-signup',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule, LoadingComponent],
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
 })
@@ -26,10 +27,9 @@ export class SignupComponent {
     });
 
     roles = ['HR', 'IT', 'EMPLOYEE'];
-    loading = false;
-
     error = this.store.selectSignal(selectSignupError);
     success = this.store.selectSignal(selectSignupSuccess);
+    loading = this.store.selectSignal(selectSignupLoading);
 
     constructor() {
         effect(

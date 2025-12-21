@@ -1,19 +1,25 @@
 package com.backend.hr_service.service;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.backend.hr_service.config.AuthForwardingFilter;
+import com.backend.hr_service.dto.EmployeeDTO;
 import com.backend.hr_service.exceptions.MentorNotAvailableException;
 import com.backend.hr_service.exceptions.ResourceNotFoundException;
 import com.backend.hr_service.feign.AuthClient;
 import com.backend.hr_service.model.Employee;
-import com.backend.hr_service.dto.EmployeeDTO;
 import com.backend.hr_service.model.OnboardingStatus;
 import com.backend.hr_service.repository.EmployeeRepository;
 import com.backend.hr_service.repository.OnboardingTaskRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
@@ -65,7 +71,7 @@ public class EmployeeService {
                 .isMentor(dto.getIsMentor())
                 .mentor(mentor)
                 .build();
-
+        
         Employee saved = employeeRepository.save(employee);
 
         // Audit log here

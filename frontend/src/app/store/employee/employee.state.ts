@@ -11,6 +11,8 @@ export interface EmployeeState {
         error: string | null;
     };
     selectedEmployee: Employee | null;
+    selectedEmployeeLoading: boolean;
+    selectedEmployeeError: string | null;
     selectedDocument: DocumentMeta | null;
     tasks: {
         data: Task[];
@@ -27,6 +29,15 @@ export interface EmployeeState {
         loading: boolean;
         error: string | null;
     };
+    addLoading: boolean;
+    updateLoading: boolean;
+    operationLoading: {
+        [employeeId: number]: {
+            delete: boolean;
+            offboard: boolean;
+            startOnboarding: boolean;
+        }
+    };
 }
 
 export const initialEmployeeState: EmployeeState = {
@@ -36,6 +47,8 @@ export const initialEmployeeState: EmployeeState = {
         error: null,
     },
     selectedEmployee: null,
+    selectedEmployeeLoading: false,
+    selectedEmployeeError: null,
     selectedDocument: null,
     tasks: {
         data: [],
@@ -52,5 +65,8 @@ export const initialEmployeeState: EmployeeState = {
         loading: false,
         error: null,
     },
+    addLoading: false,
+    updateLoading: false,
+    operationLoading: {},
 };
 

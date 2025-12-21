@@ -23,12 +23,16 @@ import {
     setSelectedEmployee,
 } from '../../../store/employee/employee.actions';
 import {
+    selectEmployeesLoading,
     selectEmployeeTasks,
+    selectEmployeeTasksError,
+    selectEmployeeTasksLoading,
     selectSelectedEmployee,
 } from '../../../store/employee/employee.selectors';
 import { ToastrService } from 'ngx-toastr';
 import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Task } from '../../../models/task.model';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 
 @Component({
     selector: 'app-employee-tasks',
@@ -38,7 +42,8 @@ import { Task } from '../../../models/task.model';
         ReactiveFormsModule,
         FormlyModule,
         FormlyBootstrapModule,
-        DynamicFormComponent
+        DynamicFormComponent,
+        LoadingComponent
     ],
     templateUrl: './employee-tasks.component.html',
 })
@@ -51,6 +56,8 @@ export class EmployeeTasksComponent implements OnInit {
     role = this.store.selectSignal(selectRole);
     tasks = this.store.selectSignal(selectEmployeeTasks);
     employee = this.store.selectSignal(selectSelectedEmployee);
+    loading = this.store.selectSignal(selectEmployeeTasksLoading);
+    tasksError = this.store.selectSignal(selectEmployeeTasksError);
 
     selectedTask = signal<Task | undefined>(undefined);
 
@@ -78,6 +85,7 @@ export class EmployeeTasksComponent implements OnInit {
     }
 
     getTaskById(id: number) {
+        console.log(this.filteredTasks());
         return this.filteredTasks().find(task => task.taskId === id);
     }
     ngOnInit(): void {
