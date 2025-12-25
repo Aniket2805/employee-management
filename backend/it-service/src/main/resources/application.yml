@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: ${DATASOURCE_URL}it-db
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/}it-db
     driverClassName: org.postgresql.Driver
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,27 +22,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
 
-# Actuator and management
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-  endpoint:
-    health:
-      show-details: always
-
-# Allow overriding Eureka registration details from environment vars set by Railway
 eureka:
-  instance:
-    hostname: ${EUREKA_INSTANCE_HOSTNAME:}
-    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
-    non-secure-port-enabled: ${EUREKA_INSTANCE_NONSECURE_PORT_ENABLED:false}
-    secure-port-enabled: ${EUREKA_INSTANCE_SECURE_PORT_ENABLED:true}
-    secure-port: ${EUREKA_INSTANCE_SECURE_PORT:443}
-    home-page-url: ${EUREKA_INSTANCE_HOME_PAGE_URL:}
-    status-page-url: ${EUREKA_INSTANCE_STATUS_PAGE_URL:}
-    health-check-url: ${EUREKA_INSTANCE_HEALTH_CHECK_URL:}
   client:
     service-url:
-      defaultZone : https://registery-service.up.railway.app/eureka/
+      defaultZone : http://localhost:8761/eureka
